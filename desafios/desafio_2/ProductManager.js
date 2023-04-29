@@ -69,7 +69,7 @@ class ProductManager {
 
   /**
    * Actualiza un producto existente en el arreglo de productos por ID.
-   * @param {string} id - ID del producto a actualizar.
+   * @param {number} id - ID del producto a actualizar.
    * @param {Product} updatedProduct - Objeto de producto actualizado.
    * @returns {Product} - Objeto de producto actualizado.
    * @throws {Error} - Lanza una excepción si los IDs no coinciden, si algún campo del objeto de producto actualizado es inválido o si el producto no existe.
