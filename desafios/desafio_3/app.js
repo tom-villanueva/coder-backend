@@ -6,7 +6,7 @@ import {fileURLToPath} from 'url';
 // Consigo la ruta del archivo de productos, para pasarsela al ProductManager
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const PRODUCT_PATH = path.join(__dirname, '/desafio_3', 'products.json');
+const PRODUCT_PATH = path.join(__dirname, 'products.json');
 const productManager = new ProductManager(PRODUCT_PATH);
 const port = 8080;
 
