@@ -1,5 +1,4 @@
 import express from "express";
-import filePaths from "../../resources/resourcesPaths.js";
 import ProductManager from "../../lib/product/ProductManager.js";
 
 const productsRouter = express.Router();
