@@ -48,6 +48,9 @@ productsRouter.post("/", async (req, res) => {
 	try {
 		const product = await ProductManager.addProduct(req.body);
 
+    const products = await ProductManager.getProducts();
+    req.io.emit('products_changed', {products});
+
     return res.status(201).json({
       status: "success",
       msg: "Product created",
@@ -83,6 +86,9 @@ productsRouter.put("/:pid", async (req, res) => {
 productsRouter.delete("/:pid", async (req, res) => {
 	try {
 		const product = await ProductManager.deleteProduct(Number(req.params.pid));
+
+    const products = await ProductManager.getProducts();
+    req.io.emit('products_changed', {products});
 
     return res.status(201).json({
       status: "success",
