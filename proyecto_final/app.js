@@ -1,6 +1,7 @@
 import express from "express";
 import productsRouter from "./src/api/products/products.js";
 import cartsRouter from "./src/api/carts/carts.js";
+import viewsProductsRouter from "./src/api/views/viewsProducts.js";
 import { __dirname } from "./utils.js";
 import handlebars from "express-handlebars";
 
@@ -24,13 +25,8 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-app.get('/', (req,res) => {
-  let testUser = {
-    name: "Tom"
-  }
-  res.render('index', testUser);
-})
-
+// Views endpoints
+app.use("/", viewsProductsRouter);
 // Product endpoints
 app.use("/products", productsRouter);
 // Carts enpoints
