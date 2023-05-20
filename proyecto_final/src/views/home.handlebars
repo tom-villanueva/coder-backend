@@ -1,0 +1,14 @@
+<main>
+  <h1>Listado de productos</h1>
+  <ul>
+    {{#each products}}
+      <li>
+        Id: {{this.id}}
+        {{this.title}}
+        ${{this.price}}
+      </li>
+      {{else}}
+      <p>No hay productos</p>
+    {{/each}}
+  </ul>
+</main>
