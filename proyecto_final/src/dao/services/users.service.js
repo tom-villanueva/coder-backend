@@ -1,4 +1,4 @@
-import UserModel from "../dao/models/users.model.js";
+import UserModel from "../models/users.model.js";
 
 class UserService {
   async getAllUsers() {
