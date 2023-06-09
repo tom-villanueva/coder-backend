@@ -1,5 +1,5 @@
 import express from "express";
-import usersService from "../../services/users.service.js";
+import usersService from "../../dao/services/users.service.js";
 
 const usersRouter = express.Router();
 
