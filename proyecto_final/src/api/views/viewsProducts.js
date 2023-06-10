@@ -5,11 +5,11 @@ const viewsProductsRouter = express.Router();
 
 viewsProductsRouter.get("/", async (req, res) => {
   const products = await ProductManager.getProducts();
-  res.render('home', {products});
+  res.render("home", { products });
 });
 
 viewsProductsRouter.get("/realtime", async (req, res) => {
-  res.render('realTimeProducts', {});
+  res.render("realTimeProducts", {});
 });
 
 export default viewsProductsRouter;

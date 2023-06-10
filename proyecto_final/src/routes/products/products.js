@@ -1,35 +1,37 @@
 import express from "express";
-import ProductManager from "../../lib/product/ProductManager.js";
+// import ProductManager from "../../dao/product/ProductManager.js";
+import productsService from "../../dao/services/products.service.js";
 
 const productsRouter = express.Router();
 
 productsRouter.get("/", async (req, res) => {
   let products = [];
 
-  if (req.query?.limit) {
-    try {
-      products = await ProductManager.getProducts(req.query.limit);
-    } catch (error) {
-      return res.status(error.statusCode).json({
-        status: "error",
-        msg: error.message,
-        data: {},
-      });
-    }
-  } else {
-    products = await ProductManager.getProducts();
+  // if (req.query?.limit) {
+  try {
+    products = await productsService.getAllProducts(req.query.limit);
+    // products = await ProductManager.getProducts(req.query.limit);
+    return res.status(200).json({
+      status: "success",
+      msg: "Products list",
+      data: products,
+    });
+  } catch (error) {
+    return res.status(error.statusCode).json({
+      status: "error",
+      msg: error.message,
+      data: {},
+    });
   }
-
-  return res.status(200).json({
-    status: "success",
-    msg: "Products list",
-    data: products,
-  });
+  // } else {
+  //   products = await productsService.getAllProducts();
+  // }
 });
 
 productsRouter.get("/:pid", async (req, res) => {
   try {
-    const product = await ProductManager.getProductById(Number(req.params.pid));
+    const product = await productsService.getProductById(req.params.pid);
+    // const product = await ProductManager.getProductById(Number(req.params.pid));
     return res.status(200).json({
       status: "success",
       msg: "Product found",
@@ -46,10 +48,8 @@ productsRouter.get("/:pid", async (req, res) => {
 
 productsRouter.post("/", async (req, res) => {
   try {
-    const product = await ProductManager.addProduct(req.body);
-
-    const products = await ProductManager.getProducts();
-    req.io.emit("products_changed", { products });
+    const product = await productsService.createProduct(req.body);
+    // const product = await ProductManager.addProduct(req.body);
 
     return res.status(201).json({
       status: "success",
@@ -67,8 +67,13 @@ productsRouter.post("/", async (req, res) => {
 
 productsRouter.put("/:pid", async (req, res) => {
   try {
-    const product = await ProductManager.updateProduct(
-      Number(req.params.pid),
+    // const product = await ProductManager.updateProduct(
+    //   Number(req.params.pid),
+    //   req.body
+    // );
+
+    const product = await productsService.updateProduct(
+      req.params.pid,
       req.body
     );
 
@@ -88,10 +93,8 @@ productsRouter.put("/:pid", async (req, res) => {
 
 productsRouter.delete("/:pid", async (req, res) => {
   try {
-    const product = await ProductManager.deleteProduct(Number(req.params.pid));
-
-    const products = await ProductManager.getProducts();
-    req.io.emit("products_changed", { products });
+    const product = await productsService.deleteProduct(req.params.pid);
+    // const product = await ProductManager.deleteProduct(Number(req.params.pid));
 
     return res.status(201).json({
       status: "success",
@@ -106,3 +109,5 @@ productsRouter.delete("/:pid", async (req, res) => {
     });
   }
 });
+
+export default productsRouter;
