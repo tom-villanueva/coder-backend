@@ -5,7 +5,7 @@ export const ProductSchema = new Schema({
   description: { type: String, required: true, max: 100 },
   price: { type: Number, required: true },
   thumbnail: { type: String, required: false, default: "" },
-  code: { type: String, required: true, unique: true },
+  code: { type: String, required: true },
   stock: { type: Number, required: true },
   status: { type: Boolean, required: false, default: true },
   category: { type: String, required: true, max: 100 },
