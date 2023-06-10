@@ -19,9 +19,7 @@ export const uploader = multer({ storage });
 
 export const connectMongo = async () => {
   try {
-    await connect(
-      "mongodb+srv://flaigan12:W7vSuL5taZoWRMZM@coder.tvviezb.mongodb.net/ecommerce?retryWrites=true&w=majority"
-    );
+    await connect("");
     console.log("Connected to mongo");
   } catch (error) {
     console.log(error);
