@@ -5,9 +5,8 @@ import usersRouter from "./src/routes/users/users.js";
 import viewsProductsRouter from "./src/routes/views/viewsProducts.js";
 import { __dirname, connectMongo } from "./utils.js";
 import handlebars from "express-handlebars";
-import viewsChatsRouter from "./src/api/views/viewsChat.js";
 import { Server } from "socket.io";
-import ProductManager from "./src/lib/product/ProductManager.js";
+import MessageModel from "./src/dao/models/messages.model.js";
 
 const port = 8080;
 
@@ -33,14 +32,25 @@ const httpServer = app.listen(port, () => {
 
 const io = new Server(httpServer);
 
-// Socket
 io.on("connection", async (socket) => {
-  console.log(`Nuevo cliente conectado ${socket.id}`);
+  const messages = await MessageModel.find({});
 
-  const products = await ProductManager.getProducts();
-
-  socket.emit("products_changed", { products });
+  io.emit("all_messages", messages);
+  socket.on("msg_front_to_back", async (msg) => {
+    const newMessage = await MessageModel.create(msg);
+    const messages = await MessageModel.find({});
+    io.emit("all_messages", messages);
+  });
 });
+
+// Socket
+// io.on("connection", async (socket) => {
+//   console.log(`Nuevo cliente conectado ${socket.id}`);
+
+//   const products = await ProductManager.getProducts();
+
+//   socket.emit("products_changed", { products });
+// });
 
 // Conecto el socket con app para accederlo del req
 // y cuando se agrega/elimina un product, puedo emitir al socket

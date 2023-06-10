@@ -1,5 +1,19 @@
 <main>
   <h1>Chat</h1>
+
+  <h2>Messages:</h2>
+  <div style="overflow: auto; height: 200px; width: 500px">
+    <div id="messages" style=" border: 1px solid black; padding: 20px">
+    </div>
+  </div>
+  <input
+    id="message-input"
+    type="email"
+    placeholder="Write message"
+    style="width: 500px; height: 50px; margin-top: 20px"
+  />
+
 </main>
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="static/js/indexChat.js"></script>

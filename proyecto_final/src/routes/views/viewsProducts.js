@@ -15,4 +15,12 @@ viewsProductsRouter.get("/", async (req, res) => {
   res.render("index", { products: context.products });
 });
 
+viewsProductsRouter.get("/chat", (req, res) => {
+  res.render("chat", {});
+});
+
+viewsProductsRouter.get("/realtime", async (req, res) => {
+  res.render("realTimeProducts", {});
+});
+
 export default viewsProductsRouter;
