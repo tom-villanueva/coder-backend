@@ -1,8 +1,8 @@
 import express from "express";
-import productsRouter from "./src/routes/products/products.js";
-import cartsRouter from "./src/routes/carts/carts.js";
-import usersRouter from "./src/routes/users/users.js";
-import viewsProductsRouter from "./src/routes/views/viewsProducts.js";
+import productsRouter from "./src/routes/products/products.routes.js";
+import cartsRouter from "./src/routes/carts/carts.routes.js";
+import usersRouter from "./src/routes/users/users.routes.js";
+import viewsProductsRouter from "./src/routes/views/products.views.routes.js";
 import { __dirname, connectMongo } from "./utils.js";
 import handlebars from "express-handlebars";
 

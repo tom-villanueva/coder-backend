@@ -8,9 +8,14 @@ class ProductService {
     }
   }
 
-  async getAllProducts(limit) {
+  async getAllProducts({ limit = 10, page, query, sort }) {
     try {
-      const products = await ProductModel.find({}).limit(limit);
+      const products = await ProductModel.paginate(query, {
+        limit,
+        page,
+        sort: { price: sort },
+      });
+
       return products;
     } catch (error) {
       if (error.name === "CastError") {

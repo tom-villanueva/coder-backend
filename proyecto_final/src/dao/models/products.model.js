@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import paginate from "mongoose-paginate-v2";
 
 export const ProductSchema = new Schema({
   title: { type: String, required: true, max: 100 },
@@ -10,6 +11,8 @@ export const ProductSchema = new Schema({
   status: { type: Boolean, required: false, default: true },
   category: { type: String, required: true, max: 100 },
 });
+
+ProductSchema.plugin(paginate);
 
 ProductSchema.path("code").validate(async function validateDuplicatedCode(
   value
