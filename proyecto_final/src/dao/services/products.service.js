@@ -8,13 +8,16 @@ class ProductService {
     }
   }
 
-  async getAllProducts({ limit = 10, page, query, sort }) {
+  async getAllProducts({ limit = 10, page = 1, category, status, sort }) {
     try {
-      const products = await ProductModel.paginate(query, {
-        limit,
-        page,
-        sort: { price: sort },
-      });
+      const products = await ProductModel.paginate(
+        { category, status },
+        {
+          limit,
+          page,
+          sort: { price: sort },
+        }
+      );
 
       return products;
     } catch (error) {
