@@ -10,14 +10,15 @@ class ProductService {
 
   async getAllProducts({ limit = 10, page = 1, category, status, sort }) {
     try {
-      const products = await ProductModel.paginate(
-        { category, status },
-        {
-          limit,
-          page,
-          sort: { price: sort },
-        }
-      );
+      const query = {
+        ...(category ? { category: category } : {}),
+        ...(status ? { status: status } : {}),
+      };
+      const products = await ProductModel.paginate(query, {
+        limit,
+        page,
+        sort: { price: sort },
+      });
 
       return products;
     } catch (error) {
@@ -25,6 +26,16 @@ class ProductService {
         throw new BadRequestError(error.message);
       }
 
+      throw new ServerError(error);
+    }
+  }
+
+  async getProductsByIds(ids) {
+    try {
+      const products = await ProductModel.find({ _id: { $in: ids } });
+
+      return products;
+    } catch (error) {
       throw new ServerError(error);
     }
   }
