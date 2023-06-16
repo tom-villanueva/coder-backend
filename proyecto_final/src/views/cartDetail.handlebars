@@ -1,0 +1,16 @@
+<h1>Cart Detail</h1>
+<section>
+  <ul class="flex column gap-4">
+    {{#each products}}
+      <li
+        class="w-full cursor-pointer p-2 border-2 border-blue-100 border-opacity-100 py-4"
+      >
+        <p>Name: {{this.title}}</p>
+        <p>${{this.price}}</p>
+        <p>Quantity: {{this.quantity}}</p>
+      </li>
+    {{else}}
+      <p>No products</p>
+    {{/each}}
+  </ul>
+</section>

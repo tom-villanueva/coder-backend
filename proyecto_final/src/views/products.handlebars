@@ -1,0 +1,46 @@
+<h1 class="text-bold text-xl">Products</h1>
+<ul class="grid grid-cols-3 gap-4">
+  {{#each docs}}
+    <li
+      class="w-full cursor-pointer p-2 border-2 border-blue-100 border-opacity-100 py-4"
+    >
+      <p>Name: {{this.title}}</p>
+      <p>Description: {{this.description}} </p>
+      <p>${{this.price}}</p>
+      <a href="http://localhost:8080/front/products/{{this.id}}">
+        <button
+          class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200"
+        >Detail</button>
+      </a>
+      <button
+        onclick="addProductToCart('{{this.id}}');"
+        class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-blue-900 focus:outline-none bg-blue-200 rounded-lg border border-blue-200 hover:bg-blue-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-blue-200"
+      >Add to cart</button>
+    </li>
+  {{else}}
+    <p>No products</p>
+  {{/each}}
+</ul>
+<p>Total Pages:</p>
+{{totalPages}}
+
+<ul class="inline-flex -space-x-px">
+  {{#if hasPrevPage}}
+    <a
+      class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700"
+      href="http://localhost:8080/front/products?page={{prevPage}}&limit={{limit}}&category={{category}}&status={{status}}&sort={{sort}}"
+    > Anterior </a>
+  {{/if}}
+  <li
+    class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+    href=""
+  >{{page}}</li>
+
+  {{#if hasNextPage}}
+    <a
+      class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700"
+      href="http://localhost:8080/front/products?page={{nextPage}}&limit={{limit}}&category={{category}}&status={{status}}&sort={{sort}}"
+    >Siguiente</a>
+  {{/if}}
+</ul>
+<script src="../../static/index.js"></script>

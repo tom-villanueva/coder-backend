@@ -5,6 +5,7 @@ import usersRouter from "./src/routes/users/users.routes.js";
 import viewsProductsRouter from "./src/routes/views/products.views.routes.js";
 import { __dirname, connectMongo } from "./utils.js";
 import handlebars from "express-handlebars";
+import viewsCartsRouter from "./src/routes/views/carts.views.routes.js";
 
 const port = 8080;
 
@@ -28,8 +29,10 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-// Views endpoints
-app.use("/", viewsProductsRouter);
+// Views products endpoints
+app.use("/front/products", viewsProductsRouter);
+// Views carts endpoints
+app.use("/front/carts", viewsCartsRouter);
 // Product endpoints
 app.use("/products", productsRouter);
 // Carts enpoints
