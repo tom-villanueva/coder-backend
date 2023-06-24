@@ -8,6 +8,7 @@ import handlebars from "express-handlebars";
 import viewsCartsRouter from "./src/routes/views/carts.views.routes.js";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 
 const port = 8080;
 
@@ -28,9 +29,14 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   session({
+    store: MongoStore.create({
+      mongoUrl: "",
+      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+      ttl: 15,
+    }),
     secret: "secretCoder",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
   })
 );
 app.use("/static", express.static(__dirname + "/public"));
