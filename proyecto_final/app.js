@@ -6,6 +6,8 @@ import viewsProductsRouter from "./src/routes/views/products.views.routes.js";
 import { __dirname, connectMongo } from "./utils.js";
 import handlebars from "express-handlebars";
 import viewsCartsRouter from "./src/routes/views/carts.views.routes.js";
+import cookieParser from "cookie-parser";
+import session from "express-session";
 
 const port = 8080;
 
@@ -23,6 +25,14 @@ app.set("view engine", "handlebars");
 // Config de express
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
+app.use(
+  session({
+    secret: "secretCoder",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 app.use("/static", express.static(__dirname + "/public"));
 
 app.listen(port, () => {
