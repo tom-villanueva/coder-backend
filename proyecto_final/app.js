@@ -1,14 +1,16 @@
-import express from "express";
-import productsRouter from "./src/routes/products/products.routes.js";
-import cartsRouter from "./src/routes/carts/carts.routes.js";
-import usersRouter from "./src/routes/users/users.routes.js";
-import viewsProductsRouter from "./src/routes/views/products.views.routes.js";
-import { __dirname, connectMongo } from "./utils.js";
-import handlebars from "express-handlebars";
-import viewsCartsRouter from "./src/routes/views/carts.views.routes.js";
-import cookieParser from "cookie-parser";
-import session from "express-session";
 import MongoStore from "connect-mongo";
+import cookieParser from "cookie-parser";
+import express from "express";
+import handlebars from "express-handlebars";
+import session from "express-session";
+import cartsRouter from "./src/routes/carts/carts.routes.js";
+import productsRouter from "./src/routes/products/products.routes.js";
+import usersRouter from "./src/routes/users/users.routes.js";
+import viewsCartsRouter from "./src/routes/views/carts.views.routes.js";
+import viewsProductsRouter from "./src/routes/views/products.views.routes.js";
+import { __dirname, auth, connectMongo } from "./utils.js";
+import viewsUsersRouter from "./src/routes/views/users.views.routes.js";
+import sessionRouter from "./src/routes/sessions/sessions.routes.js";
 
 const port = 8080;
 
@@ -32,11 +34,11 @@ app.use(
     store: MongoStore.create({
       mongoUrl: "",
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-      ttl: 15,
+      ttl: 3600,
     }),
     secret: "secretCoder",
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
   })
 );
 app.use("/static", express.static(__dirname + "/public"));
@@ -45,16 +47,19 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
+app.use("/", viewsUsersRouter);
 // Views products endpoints
-app.use("/front/products", viewsProductsRouter);
+app.use("/products", auth, viewsProductsRouter);
 // Views carts endpoints
-app.use("/front/carts", viewsCartsRouter);
+app.use("/carts", auth, viewsCartsRouter);
+// Sessions endpoint
+app.use("/api/sessions", sessionRouter);
 // Product endpoints
-app.use("/products", productsRouter);
+app.use("/api/products", productsRouter);
 // Carts enpoints
-app.use("/carts", cartsRouter);
+app.use("/api/carts", cartsRouter);
 // Users endpoints
-app.use("/users", usersRouter);
+app.use("/api/users", usersRouter);
 
 app.get("*", (req, res) => {
   return res.status(404).json({

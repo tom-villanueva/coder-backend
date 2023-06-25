@@ -26,3 +26,13 @@ export const connectMongo = async () => {
     throw "Can not connect to the db";
   }
 };
+
+export const auth = (req, res, next) => {
+  console.log(req.session);
+  if (req.session.user) {
+    return next();
+  }
+
+  return res.redirect("/login");
+  // return res.status(401).send("Unauthenticated");
+};

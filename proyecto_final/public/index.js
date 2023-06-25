@@ -2,7 +2,7 @@ const getCart = async () => {
   let storedCart = JSON.parse(localStorage.getItem("cart"));
 
   if (!storedCart) {
-    const response = await fetch("http://localhost:8080/carts", {
+    const response = await fetch("http://localhost:8080/api/carts", {
       method: "POST",
     });
     const newCart = await response.json();
@@ -18,7 +18,7 @@ const addProductToCart = async (productId) => {
   try {
     const cart = await getCart();
     const response = await fetch(
-      `http://localhost:8080/carts/${cart._id}/product/${productId}`,
+      `http://localhost:8080/api/carts/${cart._id}/product/${productId}`,
       {
         method: "POST",
       }

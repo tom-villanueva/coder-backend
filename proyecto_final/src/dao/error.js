@@ -25,3 +25,10 @@ export class NotFoundError extends HttpError {
     this.name = "NotFoundError";
   }
 }
+
+export class UnauthenticatedError extends HttpError {
+  constructor(message) {
+    super(`Unauthenticated: ${message}`, 401);
+    this.name = "UnauthenticatedError";
+  }
+}

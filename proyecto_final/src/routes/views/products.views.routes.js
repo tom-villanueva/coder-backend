@@ -4,18 +4,6 @@ import productsService from "../../dao/services/products.service.js";
 const viewsProductsRouter = express.Router();
 
 viewsProductsRouter.get("/", async (req, res) => {
-  const products = await productsService.getAllProducts();
-  const context = {
-    products: products.docs.map((product) => ({
-      title: product.title,
-      description: product.description,
-      price: product.price,
-    })),
-  };
-  res.render("index", { products: context.products });
-});
-
-viewsProductsRouter.get("/products", async (req, res) => {
   const products = await productsService.getAllProducts(req.query);
   const context = {
     ...products,
@@ -26,12 +14,15 @@ viewsProductsRouter.get("/products", async (req, res) => {
       price: product.price,
     })),
     ...req.query,
+    user: {
+      ...req.session,
+    },
   };
 
   res.render("products", context);
 });
 
-viewsProductsRouter.get("/products/:pid", async (req, res) => {
+viewsProductsRouter.get("/:pid", async (req, res) => {
   const product = await productsService.getProductById(req.params.pid);
   const context = {
     product: {
