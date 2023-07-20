@@ -11,6 +11,8 @@ import viewsProductsRouter from "./src/routes/views/products.views.routes.js";
 import { __dirname, auth, connectMongo } from "./utils.js";
 import viewsUsersRouter from "./src/routes/views/users.views.routes.js";
 import sessionRouter from "./src/routes/sessions/sessions.routes.js";
+import { initializePassport } from "./src/config/passport.config.js";
+import passport from "passport";
 
 const port = 8080;
 
@@ -46,6 +48,10 @@ app.use("/static", express.static(__dirname + "/public"));
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", viewsUsersRouter);
 // Views products endpoints

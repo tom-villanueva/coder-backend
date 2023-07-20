@@ -21,11 +21,12 @@ viewsUsersRouter.get("/register", (req, res) => {
 
 viewsUsersRouter.get("/profile", auth, (req, res) => {
   const user = {
-    email: req.session.user,
-    firstName: req.session.firstName,
-    lastName: req.session.lastName,
-    age: req.session.age,
+    email: req.session.user.email,
+    firstName: req.session.user.firstName,
+    lastName: req.session.user.lastName,
+    age: req.session.user.age,
   };
+
   res.render("profile", { user: user });
 });
 

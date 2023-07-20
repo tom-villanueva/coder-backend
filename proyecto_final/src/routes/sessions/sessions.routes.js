@@ -1,63 +1,65 @@
 import express from "express";
+import passport from "passport";
 import usersService from "../../dao/services/users.service.js";
 import { BadRequestError, UnauthenticatedError } from "../../dao/error.js";
 
 const sessionRouter = express.Router();
 
-sessionRouter.post("/register", async (req, res) => {
-  try {
-    const user = await usersService.createUser(req.body);
-
-    req.session.firstName = user.firstName;
-    req.session.lastName = user.lastName;
-    req.session.age = user.age;
-    req.session.user = user.email;
-    req.session.role =
-      user.email === "adminCoder@coder.com" && user.password === "adminCod3r123"
-        ? "admin"
-        : "user";
-
-    return res.redirect("/products");
-  } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
-  }
+sessionRouter.get("/register", (req, res) => {
+  return res.render("register", {});
 });
 
-sessionRouter.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      throw new BadRequestError("Send email and password");
+sessionRouter.post(
+  "/register",
+  passport.authenticate("register", {
+    failureRedirect: "api/sessions/failregister",
+  }),
+  (req, res) => {
+    if (!req.user) {
+      return res.json({ error: "something went wrong" });
     }
-
-    const user = await usersService.getUserByEmail(email);
-    console.log(user, password);
-    if (user.password !== password) {
-      throw new UnauthenticatedError("Incorrect password");
-    }
-
-    req.session.firstName = user.firstName;
-    req.session.lastName = user.lastName;
-    req.session.age = user.age;
-    req.session.user = email;
-    req.session.role =
-      user.email === "adminCoder@coder.com" && user.password === "adminCod3r123"
-        ? "admin"
-        : "user";
+    req.session.user = {
+      _id: req.user._id,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      role: req.user.role,
+    };
 
     return res.redirect("/products");
-  } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
   }
+);
+
+sessionRouter.get("/failregister", (req, res) => {
+  return res.send({ error: "Fail to register" });
+});
+
+sessionRouter.get("/login", (req, res) => {
+  return res.render("login", {});
+});
+
+sessionRouter.post(
+  "/login",
+  passport.authenticate("login", {
+    failureRedirect: "/api/sessions/faillogin",
+  }),
+  async (req, res) => {
+    if (!req.user) {
+      return res.json({ error: "invalid credentials" });
+    }
+    req.session.user = {
+      _id: req.user._id,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      role: req.user.role,
+    };
+    return res.redirect("/products");
+  }
+);
+
+sessionRouter.get("/faillogin", (req, res) => {
+  return res.send({ error: "Fail to login" });
 });
 
 sessionRouter.post("/logout", (req, res) => {
@@ -73,5 +75,26 @@ sessionRouter.post("/logout", (req, res) => {
     return res.redirect("/login");
   });
 });
+
+sessionRouter.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
+
+sessionRouter.get(
+  "/githubcallback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  (req, res) => {
+    req.session.user = {
+      _id: req.user._id,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      role: req.user.role,
+    };
+    // Successful authentication, redirect home.
+    res.redirect("/products");
+  }
+);
 
 export default sessionRouter;

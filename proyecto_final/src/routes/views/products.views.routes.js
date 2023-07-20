@@ -15,7 +15,7 @@ viewsProductsRouter.get("/", async (req, res) => {
     })),
     ...req.query,
     user: {
-      ...req.session,
+      ...req.session.user,
     },
   };
 
