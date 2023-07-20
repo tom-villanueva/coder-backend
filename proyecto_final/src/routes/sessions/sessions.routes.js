@@ -1,7 +1,6 @@
 import express from "express";
 import passport from "passport";
-import usersService from "../../dao/services/users.service.js";
-import { BadRequestError, UnauthenticatedError } from "../../dao/error.js";
+import { UnauthenticatedError } from "../../dao/error.js";
 
 const sessionRouter = express.Router();
 
@@ -96,5 +95,29 @@ sessionRouter.get(
     res.redirect("/products");
   }
 );
+
+sessionRouter.get("/current", async (req, res) => {
+  try {
+    let user;
+
+    if (req.session.user) {
+      user = req.session.user;
+    } else {
+      throw new UnauthenticatedError("No user logged in");
+    }
+
+    return res.status(200).json({
+      status: "success",
+      msg: "Current user",
+      data: user,
+    });
+  } catch (error) {
+    return res.status(error.statusCode).json({
+      status: "error",
+      msg: error.message,
+      data: {},
+    });
+  }
+});
 
 export default sessionRouter;

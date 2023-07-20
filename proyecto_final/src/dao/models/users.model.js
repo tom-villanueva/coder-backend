@@ -9,7 +9,12 @@ const UserModel = model(
     age: { type: Number, required: false },
     password: { type: String, required: true },
     role: { type: String, default: "user", required: true, max: 100 },
-    cart: { type: String, required: false, max: 100 },
+    cart: {
+      type: Schema.Types.ObjectId,
+      ref: "cart",
+      required: false,
+      max: 100,
+    },
   })
 );
 
