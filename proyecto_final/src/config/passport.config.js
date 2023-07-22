@@ -4,6 +4,7 @@ import UserModel from "../dao/models/users.model.js";
 import { createHash, isValidPassword } from "../../utils.js";
 import GitHubStrategy from "passport-github2";
 import fetch from "node-fetch";
+import env from "../../config.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -26,7 +27,7 @@ export function initializePassport() {
             age,
             email,
             role:
-              email === "adminCoder@coder.com" && password === "adminCod3r123"
+              email === env.adminName && password === env.adminPassword
                 ? "admin"
                 : "user",
             password: createHash(password),
@@ -68,8 +69,8 @@ export function initializePassport() {
     "github",
     new GitHubStrategy(
       {
-        clientID: "Iv1.2c1530771319e867",
-        clientSecret: "a5dba31664401ae117ff5e4e36f13e20cb88f7ee",
+        clientID: env.githubClientId,
+        clientSecret: env.githubClientScret,
         callbackURL: "http://localhost:8080/api/sessions/githubcallback",
       },
       async (accesToken, _, profile, done) => {

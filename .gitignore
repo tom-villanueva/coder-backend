@@ -1,4 +1,7 @@
 node_modules
 
+.env
+.env.development
+.env.production
 proyecto_final/src/resources/carts.json
 proyecto_final/src/resources/products.json

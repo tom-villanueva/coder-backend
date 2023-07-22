@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import multer from "multer";
 import { connect } from "mongoose";
 import bcrypt from "bcrypt";
+import env from "./config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
@@ -20,7 +21,7 @@ export const uploader = multer({ storage });
 
 export const connectMongo = async () => {
   try {
-    await connect("");
+    await connect(env.mongoUrl);
     console.log("Connected to mongo");
   } catch (error) {
     console.log(error);

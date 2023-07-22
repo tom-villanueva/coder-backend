@@ -13,8 +13,9 @@ import viewsUsersRouter from "./src/routes/views/users.views.routes.js";
 import sessionRouter from "./src/routes/sessions/sessions.routes.js";
 import { initializePassport } from "./src/config/passport.config.js";
 import passport from "passport";
+import env from "./config.js";
 
-const port = 8080;
+const port = env.port;
 
 const app = express();
 
@@ -34,7 +35,7 @@ app.use(cookieParser());
 app.use(
   session({
     store: MongoStore.create({
-      mongoUrl: "",
+      mongoUrl: env.mongoUrl,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 3600,
     }),
