@@ -1,7 +1,7 @@
 import passport from "passport";
 import local from "passport-local";
 import UserModel from "../dao/models/users.model.js";
-import { createHash, isValidPassword } from "../../utils.js";
+import { createHash, isValidPassword } from "../utils/bcrypt.util.js";
 import GitHubStrategy from "passport-github2";
 import fetch from "node-fetch";
 import env from "../../config.js";
