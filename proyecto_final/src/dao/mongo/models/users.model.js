@@ -12,8 +12,6 @@ const UserModel = model(
     cart: {
       type: Schema.Types.ObjectId,
       ref: "cart",
-      required: false,
-      max: 100,
     },
   })
 );

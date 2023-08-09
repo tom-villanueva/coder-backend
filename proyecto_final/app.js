@@ -9,7 +9,7 @@ import usersRouter from "./src/routes/users.routes.js";
 import viewsCartsRouter from "./src/routes/carts.views.routes.js";
 import viewsProductsRouter from "./src/routes/products.views.routes.js";
 import { __dirname } from "./dirname.util.js";
-import { auth } from "./src/middlewares/auth.middleware.js";
+import { isLoggedIn } from "./src/middlewares/auth.middleware.js";
 import { connectMongo } from "./src/utils/mongo.util.js";
 import viewsUsersRouter from "./src/routes/users.views.routes.js";
 import sessionRouter from "./src/routes/sessions.routes.js";
@@ -56,9 +56,9 @@ app.use(passport.session());
 
 app.use("/", viewsUsersRouter);
 // Views products endpoints
-app.use("/products", auth, viewsProductsRouter);
+app.use("/products", isLoggedIn, viewsProductsRouter);
 // Views carts endpoints
-app.use("/carts", auth, viewsCartsRouter);
+app.use("/carts", isLoggedIn, viewsCartsRouter);
 // Sessions endpoint
 app.use("/api/sessions", sessionRouter);
 // Product endpoints

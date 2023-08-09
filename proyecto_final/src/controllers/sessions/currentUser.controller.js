@@ -1,3 +1,4 @@
+import userDTO from "../../dao/dto/user.dto.js";
 import { UnauthenticatedError } from "../../utils/error.util.js";
 
 const currentUserController = async (req, res) => {
@@ -5,7 +6,7 @@ const currentUserController = async (req, res) => {
     let user;
 
     if (req.session.user) {
-      user = req.session.user;
+      user = userDTO(req.session.user);
     } else {
       throw new UnauthenticatedError("No user logged in");
     }

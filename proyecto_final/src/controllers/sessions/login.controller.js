@@ -7,6 +7,7 @@ const loginController = async (req, res) => {
     email: req.user.email,
     firstName: req.user.firstName,
     lastName: req.user.lastName,
+    cart: req.user.cart,
     role: req.user.role,
   };
   return res.redirect("/products");

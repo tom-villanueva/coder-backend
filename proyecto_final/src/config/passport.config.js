@@ -5,6 +5,7 @@ import { createHash, isValidPassword } from "../utils/bcrypt.util.js";
 import GitHubStrategy from "passport-github2";
 import fetch from "node-fetch";
 import env from "../../config.js";
+import CartModel from "../dao/mongo/models/carts.model.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -33,7 +34,11 @@ export function initializePassport() {
             password: createHash(password),
           };
 
-          let userCreated = await UserModel.create(newUser);
+          const userCart = await CartModel.create({});
+          const userCreated = await UserModel.create({
+            ...newUser,
+            cart: userCart._id,
+          });
           return done(null, userCreated, { message: "User created" });
         } catch (error) {
           return done(error, { message: "Error creating user" });
@@ -101,7 +106,12 @@ export function initializePassport() {
               role: "user",
               password: createHash("nopass"),
             };
-            let userCreated = await UserModel.create(newUser);
+
+            const userCart = await CartModel.create({});
+            const userCreated = await UserModel.create({
+              ...newUser,
+              cart: userCart._id,
+            });
             console.log("User Registration succesful");
             return done(null, userCreated);
           } else {
