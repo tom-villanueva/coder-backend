@@ -1,8 +1,9 @@
 import cartsService from "../../services/carts.service.js";
+import { CartService } from "../../services/index.js";
 
 const updateCartProductsController = async (req, res) => {
   try {
-    const cart = await cartsService.updateCartProducts(
+    const cart = await CartService.updateCartProducts(
       req.params.cid,
       req.body.pids
     );

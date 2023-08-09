@@ -3,17 +3,20 @@ import {
   ServerError,
   NotFoundError,
 } from "../utils/error.util.js";
-import UserModel from "../dao/models/users.model.js";
 
 class UserService {
+  constructor(dao) {
+    this.dao = dao;
+  }
+
   async getAllUsers() {
-    const users = await UserModel.find({});
+    const users = await this.dao.get({});
     return users;
   }
 
   async createUser(user) {
     try {
-      const newUser = await UserModel.create(user);
+      const newUser = await this.dao.create(user);
 
       return newUser;
     } catch (error) {
@@ -27,7 +30,7 @@ class UserService {
 
   async getUserByEmail(email) {
     try {
-      const user = await UserModel.findOne({ email: email });
+      const user = await this.dao.getUserByEmail(email);
 
       if (!user) {
         throw new NotFoundError("User not found");
@@ -41,7 +44,7 @@ class UserService {
 
   async getUserById(id) {
     try {
-      const user = await UserModel.findById(id);
+      const user = await this.dao.getOne(id);
 
       if (!user) {
         throw new NotFoundError("User not found");
@@ -54,4 +57,4 @@ class UserService {
   }
 }
 
-export default new UserService();
+export default UserService;

@@ -1,7 +1,8 @@
-import cartsService from "../../services/carts.service.js";
+import { CartService } from "../../services/index.js";
 
 const renderCartController = async (req, res) => {
-  const products = await cartsService.getCartProducts(req.params.cid);
+  const products = await CartService.getCartProducts(req.params.cid);
+
   const context = {
     products: products.map((product) => ({
       title: product.product.title,

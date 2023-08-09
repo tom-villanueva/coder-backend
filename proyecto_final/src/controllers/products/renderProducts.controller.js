@@ -1,7 +1,7 @@
-import productsService from "../../services/products.service.js";
+import { ProductService } from "../../services/index.js";
 
 const renderProductsController = async (req, res) => {
-  const products = await productsService.getAllProducts(req.query);
+  const products = await ProductService.getAllProducts(req.query);
   const context = {
     ...products,
     docs: products.docs.map((product) => ({

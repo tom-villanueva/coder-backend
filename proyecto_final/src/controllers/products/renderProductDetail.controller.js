@@ -1,7 +1,7 @@
-import productsService from "../../services/products.service.js";
+import { ProductService } from "../../services/index.js";
 
 const renderProductDetailController = async (req, res) => {
-  const product = await productsService.getProductById(req.params.pid);
+  const product = await ProductService.getProductById(req.params.pid);
   const context = {
     product: {
       id: product._id.toString(),

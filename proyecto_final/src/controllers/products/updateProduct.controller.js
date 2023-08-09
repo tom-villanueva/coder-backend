@@ -1,8 +1,8 @@
-import productsService from "../../services/products.service.js";
+import { ProductService } from "../../services/index.js";
 
 const updateProductController = async (req, res) => {
   try {
-    const product = await productsService.updateProduct(
+    const product = await ProductService.updateProduct(
       req.params.pid,
       req.body
     );

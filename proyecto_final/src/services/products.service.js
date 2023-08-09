@@ -1,4 +1,3 @@
-import ProductModel from "../dao/models/products.model.js";
 import {
   BadRequestError,
   NotFoundError,
@@ -6,6 +5,10 @@ import {
 } from "../utils/error.util.js";
 
 class ProductService {
+  constructor(dao) {
+    this.dao = dao;
+  }
+
   checkId(id) {
     if (!id) {
       throw new BadRequestError("Id required");
@@ -18,11 +21,8 @@ class ProductService {
         ...(category ? { category: category } : {}),
         ...(status ? { status: status } : {}),
       };
-      const products = await ProductModel.paginate(query, {
-        limit,
-        page,
-        sort: { price: sort },
-      });
+
+      const products = await this.dao.get(query, limit, page, sort);
 
       return products;
     } catch (error) {
@@ -36,7 +36,7 @@ class ProductService {
 
   async getProductsByIds(ids) {
     try {
-      const products = await ProductModel.find({ _id: { $in: ids } });
+      const products = await this.dao.getByIds(ids);
 
       return products;
     } catch (error) {
@@ -46,7 +46,7 @@ class ProductService {
 
   async getProductById(id) {
     try {
-      const product = await ProductModel.findOne({ _id: id });
+      const product = await this.dao.getOne({ _id: id });
 
       if (!product) {
         throw new NotFoundError("Product not found");
@@ -68,7 +68,8 @@ class ProductService {
 
   async createProduct(product) {
     try {
-      const newProduct = await ProductModel.create(product);
+      const newProduct = await this.dao.get(product);
+
       return newProduct;
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -82,7 +83,7 @@ class ProductService {
   async updateProduct(id, product) {
     try {
       this.checkId(id);
-      const updatedProduct = await ProductModel.updateOne({ _id: id }, product);
+      const updatedProduct = await this.dao.updateProduct(id, product);
 
       if (updatedProduct.modifiedCount === 0) {
         throw new NotFoundError("Product not found with that id");
@@ -113,7 +114,7 @@ class ProductService {
   async deleteProduct(id) {
     try {
       this.checkId(id);
-      const deletedProduct = await ProductModel.deleteOne({ _id: id });
+      const deletedProduct = await this.dao.deleteProduct(id);
 
       if (deletedProduct.deletedCount === 0) {
         throw new NotFoundError("Product not found with that id");
@@ -138,4 +139,4 @@ class ProductService {
   }
 }
 
-export default new ProductService();
+export default ProductService;

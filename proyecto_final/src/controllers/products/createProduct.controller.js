@@ -1,8 +1,8 @@
-import productsService from "../../services/products.service.js";
+import { ProductService } from "../../services/index.js";
 
 const createProductController = async (req, res) => {
   try {
-    const product = await productsService.createProduct(req.body);
+    const product = await ProductService.createProduct(req.body);
 
     return res.status(201).json({
       status: "success",

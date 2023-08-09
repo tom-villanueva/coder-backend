@@ -1,8 +1,8 @@
-import usersService from "../../services/users.service.js";
+import { UserService } from "../../services/index.js";
 
 const getAllUsersController = async (req, res) => {
   try {
-    const users = usersService.getAllUsers();
+    const users = UserService.getAllUsers();
     return res.status(200).json({
       status: "success",
       msg: "Usuarios",

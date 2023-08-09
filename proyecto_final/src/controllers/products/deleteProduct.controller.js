@@ -1,8 +1,8 @@
-import productsService from "../../services/products.service.js";
+import { ProductService } from "../../services/index.js";
 
 const deleteProductController = async (req, res) => {
   try {
-    const product = await productsService.deleteProduct(req.params.pid);
+    const product = await ProductService.deleteProduct(req.params.pid);
 
     return res.status(201).json({
       status: "success",

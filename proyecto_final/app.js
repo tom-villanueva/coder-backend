@@ -25,9 +25,7 @@ connectMongo();
 
 // Config de express-handlebars
 app.engine("handlebars", handlebars.engine());
-
 app.set("views", __dirname + "/src/views");
-
 app.set("view engine", "handlebars");
 
 // Config de express

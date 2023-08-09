@@ -1,12 +1,15 @@
-import CartModel from "../dao/models/carts.model.js";
 import {
   BadRequestError,
   NotFoundError,
   ServerError,
 } from "../utils/error.util.js";
-import productsService from "./products.service.js";
+import { ProductService } from "./index.js";
 
 class CartService {
+  constructor(dao) {
+    this.dao = dao;
+  }
+
   checkId(id) {
     if (!id) {
       throw new BadRequestError("Id required");
@@ -15,7 +18,7 @@ class CartService {
 
   async getAllCarts() {
     try {
-      const carts = await CartModel.find({});
+      const carts = await this.dao.get({});
       return carts;
     } catch (error) {
       throw new ServerError(error);
@@ -25,7 +28,7 @@ class CartService {
   async getCartProducts(id) {
     try {
       this.checkId(id);
-      const cart = await CartModel.findOne({ _id: id });
+      const cart = await this.dao.getOne({ _id: id });
 
       if (!cart) {
         throw new NotFoundError("Cart not found");
@@ -39,7 +42,7 @@ class CartService {
 
   async createCart() {
     try {
-      const cart = await CartModel.create({});
+      const cart = await this.dao.create({});
       return cart;
     } catch (error) {
       throw new ServerError(error);
@@ -48,31 +51,9 @@ class CartService {
 
   async addProductToCart(id, pid) {
     try {
-      const product = await productsService.getProductById(pid);
+      const product = await ProductService.getProductById(pid);
 
-      let productAdded = await CartModel.findOneAndUpdate(
-        {
-          _id: id,
-          "products.product": product._id,
-        },
-        {
-          $inc: {
-            "products.$.quantity": 1,
-          },
-        },
-        { new: true }
-      );
-
-      // if the product is a new one
-      if (!productAdded) {
-        productAdded = await CartModel.findOneAndUpdate(
-          {
-            _id: id,
-          },
-          { $push: { products: { product: product._id, quantity: 1 } } },
-          { new: true }
-        );
-      }
+      const productAdded = await this.dao.addProductToCart(id, product);
 
       return productAdded;
     } catch (error) {
@@ -83,16 +64,9 @@ class CartService {
   async deleteProductFromCart(id, pid) {
     try {
       // lo busco para ver si existe
-      const product = await productsService.getProductById(pid);
+      const product = await ProductService.getProductById(pid);
 
-      const productDeleted = await CartModel.findOneAndUpdate(
-        {
-          _id: id,
-          "products.product": product._id,
-        },
-        { $pull: { products: { product: product._id } } },
-        { new: true }
-      );
+      const productDeleted = await this.dao.deleteProductFromCart(id, product);
 
       if (!productDeleted) {
         throw new NotFoundError("Product or cart not found");
@@ -106,7 +80,7 @@ class CartService {
 
   async updateCartProducts(id, pids) {
     try {
-      const products = await productsService.getProductsByIds(pids);
+      const products = await ProductService.getProductsByIds(pids);
 
       if (!products) {
         throw new NotFoundError("One of the products couldn't be found");
@@ -117,16 +91,9 @@ class CartService {
         quantity: 1,
       }));
 
-      const productsAdded = await CartModel.findOneAndUpdate(
-        {
-          _id: id,
-        },
-        {
-          $set: {
-            products: productsToInsert,
-          },
-        },
-        { new: true }
+      const productsAdded = await this.dao.updateCartProducts(
+        id,
+        productsToInsert
       );
 
       if (!productsAdded) {
@@ -145,19 +112,12 @@ class CartService {
         throw new BadRequestError("Quantity field is missing");
       }
       // lo busco para ver si existe
-      const product = await productsService.getProductById(pid);
+      const product = await ProductService.getProductById(pid);
 
-      const productUpdated = await CartModel.findOneAndUpdate(
-        {
-          _id: id,
-          "products.product": product._id,
-        },
-        {
-          $set: {
-            "products.$.quantity": quantity,
-          },
-        },
-        { new: true }
+      const productUpdated = await this.dao.updateCartProduct(
+        id,
+        product,
+        quantity
       );
 
       if (!productUpdated) {
@@ -172,17 +132,7 @@ class CartService {
 
   async deleteCartProducts(id) {
     try {
-      const productsDeleted = await CartModel.findOneAndUpdate(
-        {
-          _id: id,
-        },
-        {
-          $set: {
-            products: [],
-          },
-        },
-        { new: true }
-      );
+      const productsDeleted = await this.dao.deleteCartProducts(id);
 
       if (!productsDeleted) {
         throw new NotFoundError("Cart not found");
@@ -195,4 +145,4 @@ class CartService {
   }
 }
 
-export default new CartService();
+export default CartService;

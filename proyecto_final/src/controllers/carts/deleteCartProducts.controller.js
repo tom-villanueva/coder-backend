@@ -1,8 +1,8 @@
-import cartsService from "../../services/carts.service.js";
+import { CartService } from "../../services/index.js";
 
 const deleteCartProductsController = async (req, res) => {
   try {
-    const cart = await cartsService.deleteCartProducts(req.params.cid);
+    const cart = await CartService.deleteCartProducts(req.params.cid);
 
     return res.status(201).json({
       status: "success",
