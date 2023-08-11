@@ -21,7 +21,6 @@ export const isAdmin = (req, res, next) => {
 
 export const isCartOwner = (req, res, next) => {
   if (req.session.user && req.session.user.cart === req.params.cid) {
-    console.log(req.session.user, req.params.cid);
     return next();
   }
 

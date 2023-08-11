@@ -32,3 +32,10 @@ export class UnauthenticatedError extends HttpError {
     this.name = "UnauthenticatedError";
   }
 }
+
+export class UnprocessableContentError extends HttpError {
+  constructor(message) {
+    super(`Unprocessable Content: ${message}`, 422);
+    this.name = "UnprocessableContentError";
+  }
+}

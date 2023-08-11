@@ -5,7 +5,7 @@ const updateCartProductsController = async (req, res) => {
   try {
     const cart = await CartService.updateCartProducts(
       req.params.cid,
-      req.body.pids
+      req.body.products
     );
 
     return res.status(201).json({

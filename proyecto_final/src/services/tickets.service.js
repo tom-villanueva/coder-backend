@@ -2,7 +2,7 @@ import {
   BadRequestError,
   NotFoundError,
   ServerError,
-} from "../utils/error.util";
+} from "../utils/error.util.js";
 
 class TicketService {
   constructor(dao) {
