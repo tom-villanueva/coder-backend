@@ -16,6 +16,7 @@ import sessionRouter from "./src/routes/sessions.routes.js";
 import { initializePassport } from "./src/config/passport.config.js";
 import passport from "passport";
 import env from "./config.js";
+import { errorHandler } from "./src/middlewares/error-handler.middleware.js";
 
 const port = env.port;
 
@@ -37,7 +38,6 @@ app.use(
     store: MongoStore.create({
       mongoUrl: env.mongoUrl,
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-      ttl: 3600,
     }),
     secret: "secretCoder",
     resave: true,
@@ -75,3 +75,5 @@ app.get("*", (req, res) => {
     data: {},
   });
 });
+
+app.use(errorHandler);
