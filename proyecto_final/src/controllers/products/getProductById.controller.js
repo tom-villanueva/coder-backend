@@ -1,6 +1,6 @@
 import { ProductService } from "../../services/index.js";
 
-const getProductByIdController = async (req, res) => {
+const getProductByIdController = async (req, res, next) => {
   try {
     const product = await ProductService.getProductById(req.params.pid);
     return res.status(200).json({
@@ -9,11 +9,7 @@ const getProductByIdController = async (req, res) => {
       data: product,
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    next(error);
   }
 };
 

@@ -1,6 +1,6 @@
 import { ProductService } from "../../services/index.js";
 
-const deleteProductController = async (req, res) => {
+const deleteProductController = async (req, res, next) => {
   try {
     const product = await ProductService.deleteProduct(req.params.pid);
 
@@ -10,11 +10,7 @@ const deleteProductController = async (req, res) => {
       data: product,
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    next(error);
   }
 };
 

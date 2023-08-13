@@ -1,6 +1,6 @@
 import { CartService } from "../../services/index.js";
 
-const renderCartController = async (req, res) => {
+const renderCartController = async (req, res, next) => {
   const products = await CartService.getCartProducts(req.params.cid);
 
   const context = {

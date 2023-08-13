@@ -1,7 +1,7 @@
 import userDTO from "../../dao/dto/user.dto.js";
 import { UnauthenticatedError } from "../../utils/error.util.js";
 
-const currentUserController = async (req, res) => {
+const currentUserController = async (req, res, next) => {
   try {
     let user;
 
@@ -17,11 +17,7 @@ const currentUserController = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    next(error);
   }
 };
 

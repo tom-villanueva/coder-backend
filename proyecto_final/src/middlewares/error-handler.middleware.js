@@ -1,6 +1,6 @@
 import { ErrorCodes } from "../utils/error.util.js";
 
-export const errorHandler = (error, req, res, next) => {
+export default (error, req, res, next) => {
   if (Object.values(ErrorCodes).includes(error.errorCode)) {
     return res
       .status(error.statusCode)

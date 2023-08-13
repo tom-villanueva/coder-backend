@@ -1,4 +1,4 @@
-const githubCallbackController = (req, res) => {
+const githubCallbackController = (req, res, next) => {
   req.session.user = {
     _id: req.user._id,
     email: req.user.email,

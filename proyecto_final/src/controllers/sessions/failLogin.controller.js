@@ -1,4 +1,4 @@
-const failLoginController = (req, res) => {
+const failLoginController = (req, res, next) => {
   return res.send({ error: "Fail to login" });
 };
 

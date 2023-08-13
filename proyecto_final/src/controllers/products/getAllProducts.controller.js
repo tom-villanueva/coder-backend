@@ -1,6 +1,6 @@
 import { ProductService } from "../../services/index.js";
 
-const getAllProductsController = async (req, res) => {
+const getAllProductsController = async (req, res, next) => {
   try {
     const paginatedProducts = await ProductService.getAllProducts(req.query);
 
@@ -10,11 +10,7 @@ const getAllProductsController = async (req, res) => {
       ...paginatedProducts,
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    next(error);
   }
 };
 

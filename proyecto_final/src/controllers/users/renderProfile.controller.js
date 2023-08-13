@@ -1,4 +1,4 @@
-const renderProfileController = (req, res) => {
+const renderProfileController = (req, res, next) => {
   const user = {
     email: req.session.user.email,
     firstName: req.session.user.firstName,

@@ -16,7 +16,7 @@ import sessionRouter from "./src/routes/sessions.routes.js";
 import { initializePassport } from "./src/config/passport.config.js";
 import passport from "passport";
 import env from "./config.js";
-import { errorHandler } from "./src/middlewares/error-handler.middleware.js";
+import errorHandler from "./src/middlewares/error-handler.middleware.js";
 
 const port = env.port;
 
@@ -46,10 +46,6 @@ app.use(
 );
 app.use("/static", express.static(__dirname + "/public"));
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
-
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
@@ -77,3 +73,7 @@ app.get("*", (req, res) => {
 });
 
 app.use(errorHandler);
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});

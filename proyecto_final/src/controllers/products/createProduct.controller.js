@@ -1,7 +1,7 @@
 import productDTO from "../../dao/dto/products.dto.js";
 import { ProductService } from "../../services/index.js";
 
-const createProductController = async (req, res) => {
+const createProductController = async (req, res, next) => {
   try {
     const newProduct = productDTO(req.body);
     const product = await ProductService.createProduct(newProduct);
@@ -12,11 +12,7 @@ const createProductController = async (req, res) => {
       data: product,
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    next(error);
   }
 };
 

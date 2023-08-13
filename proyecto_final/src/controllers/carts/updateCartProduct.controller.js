@@ -1,6 +1,6 @@
 import { CartService } from "../../services/index.js";
 
-const updateCartProductController = async (req, res) => {
+const updateCartProductController = async (req, res, next) => {
   try {
     const cart = await CartService.updateCartProduct(
       req.params.cid,
@@ -14,11 +14,7 @@ const updateCartProductController = async (req, res) => {
       data: cart,
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    next(error);
   }
 };
 

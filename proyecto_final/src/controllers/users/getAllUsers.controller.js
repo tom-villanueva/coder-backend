@@ -1,6 +1,7 @@
 import { UserService } from "../../services/index.js";
+import { ServerError } from "../../utils/error.util.js";
 
-const getAllUsersController = async (req, res) => {
+const getAllUsersController = async (req, res, next) => {
   try {
     const users = UserService.getAllUsers();
     return res.status(200).json({
@@ -9,11 +10,7 @@ const getAllUsersController = async (req, res) => {
       data: users,
     });
   } catch (error) {
-    return res.status(500).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    throw new ServerError("Error retrieving users");
   }
 };
 

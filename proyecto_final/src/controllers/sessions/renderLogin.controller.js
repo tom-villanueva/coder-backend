@@ -1,4 +1,4 @@
-const renderLoginController = (req, res) => {
+const renderLoginController = (req, res, next) => {
   if (req.session.user) {
     return res.redirect("/products");
   }

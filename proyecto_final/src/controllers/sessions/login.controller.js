@@ -1,4 +1,4 @@
-const loginController = async (req, res) => {
+const loginController = async (req, res, next) => {
   if (!req.user) {
     return res.json({ error: "invalid credentials" });
   }

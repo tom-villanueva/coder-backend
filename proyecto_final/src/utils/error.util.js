@@ -17,7 +17,7 @@ export class HttpError extends Error {
 export class ServerError extends HttpError {
   constructor(message) {
     super(`Internal Server Error: ${message}`, 500, ErrorCodes.SERVER_ERROR);
-    this.name = "NotFoundError";
+    this.name = "ServerError";
   }
 }
 

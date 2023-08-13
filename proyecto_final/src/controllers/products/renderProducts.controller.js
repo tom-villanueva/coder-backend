@@ -1,6 +1,6 @@
 import { ProductService } from "../../services/index.js";
 
-const renderProductsController = async (req, res) => {
+const renderProductsController = async (req, res, next) => {
   const products = await ProductService.getAllProducts(req.query);
   const context = {
     ...products,

@@ -1,6 +1,6 @@
 import { ProductService } from "../../services/index.js";
 
-const updateProductController = async (req, res) => {
+const updateProductController = async (req, res, next) => {
   try {
     const product = await ProductService.updateProduct(
       req.params.pid,
@@ -13,11 +13,7 @@ const updateProductController = async (req, res) => {
       data: product,
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    next(error);
   }
 };
 

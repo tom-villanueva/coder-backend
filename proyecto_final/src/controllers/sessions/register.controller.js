@@ -1,4 +1,4 @@
-const registerController = (req, res) => {
+const registerController = (req, res, next) => {
   if (!req.user) {
     return res.json({ error: "something went wrong" });
   }

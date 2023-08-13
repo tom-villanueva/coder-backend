@@ -1,6 +1,6 @@
 import { CartService } from "../../services/index.js";
 
-const purchaseController = async (req, res) => {
+const purchaseController = async (req, res, next) => {
   try {
     const result = await CartService.purchase(req.params.cid, req.session.user);
 
@@ -10,11 +10,7 @@ const purchaseController = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    return res.status(error.statusCode).json({
-      status: "error",
-      msg: error.message,
-      data: {},
-    });
+    next(error);
   }
 };
 
