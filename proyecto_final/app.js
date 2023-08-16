@@ -64,6 +64,29 @@ app.use("/api/carts", cartsRouter);
 // Users endpoints
 app.use("/api/users", usersRouter);
 
+app.get("/mockingproducts", (req, res) => {
+  const products = [];
+  for (let i = 0; i < 100; i++) {
+    products.push({
+      _id: `6483de46fc7349e7c00e547${i}`,
+      title: `Mock ${i}`,
+      description: `Mock desc ${i}`,
+      price: 100 * i,
+      thumbnail: "/mock.png",
+      code: `abc${i}`,
+      stock: 5,
+      status: false,
+      category: `Mock`,
+      __v: 0,
+    });
+  }
+  return res.status(200).json({
+    status: "success",
+    msg: "Mock products",
+    docs: products,
+  });
+});
+
 app.get("*", (req, res) => {
   return res.status(404).json({
     status: "error",
