@@ -17,10 +17,14 @@ import { initializePassport } from "./src/config/passport.config.js";
 import passport from "passport";
 import env from "./config.js";
 import errorHandler from "./src/middlewares/error-handler.middleware.js";
+import addLogger from "./src/middlewares/winston.middleware.js";
 
 const port = env.port;
 
 const app = express();
+
+// Config logger
+app.use(addLogger);
 
 connectMongo();
 
@@ -85,6 +89,16 @@ app.get("/mockingproducts", (req, res) => {
     msg: "Mock products",
     docs: products,
   });
+});
+
+app.get("/loggerTest", (req, res) => {
+  req.logger.fatal("fatal log test");
+  req.logger.error("error log test");
+  req.logger.warn("warn log test");
+  req.logger.info("info log test");
+  req.logger.http("http log test");
+  req.logger.debug("debug log test");
+  res.status(200).json({ message: "logger test" });
 });
 
 app.get("*", (req, res) => {
