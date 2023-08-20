@@ -18,6 +18,7 @@ import passport from "passport";
 import env from "./config.js";
 import errorHandler from "./src/middlewares/error-handler.middleware.js";
 import addLogger from "./src/middlewares/winston.middleware.js";
+import { logger } from "./src/utils/winston.util.js";
 
 const port = env.port;
 
@@ -112,5 +113,5 @@ app.get("*", (req, res) => {
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  logger.info(`Server listening on port ${port}`);
 });

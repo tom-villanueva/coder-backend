@@ -6,6 +6,7 @@ import GitHubStrategy from "passport-github2";
 import fetch from "node-fetch";
 import env from "../../config.js";
 import CartModel from "../dao/mongo/models/carts.model.js";
+import { logger } from "../utils/winston.util.js";
 
 const LocalStrategy = local.Strategy;
 
@@ -41,6 +42,7 @@ export function initializePassport() {
           });
           return done(null, userCreated, { message: "User created" });
         } catch (error) {
+          req.logger.error(error);
           return done(error, { message: "Error creating user" });
         }
       }
@@ -64,6 +66,7 @@ export function initializePassport() {
 
           return done(null, user);
         } catch (error) {
+          logger.error(error);
           return done(error);
         }
       }
@@ -79,9 +82,9 @@ export function initializePassport() {
         callbackURL: "http://localhost:8080/api/sessions/githubcallback",
       },
       async (accesToken, _, profile, done) => {
-        console.log(profile);
+        logger.debug(profile);
         try {
-          console.log(profile);
+          logger.debug(profile);
           const res = await fetch("https://api.github.com/user/emails", {
             headers: {
               Accept: "application/vnd.github+json",
@@ -112,15 +115,15 @@ export function initializePassport() {
               ...newUser,
               cart: userCart._id,
             });
-            console.log("User Registration succesful");
+
+            logger.info("User Registration succesful");
             return done(null, userCreated);
           } else {
-            console.log("User already exists");
+            logger.warn("User already exists");
             return done(null, user);
           }
         } catch (e) {
-          console.log("Error en auth github");
-          console.log(e);
+          logger.error("Error en auth github");
           return done(e);
         }
       }

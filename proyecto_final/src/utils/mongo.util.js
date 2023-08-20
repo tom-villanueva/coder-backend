@@ -1,12 +1,13 @@
 import { connect } from "mongoose";
 import env from "../../config.js";
+import { logger } from "./winston.util.js";
 
 export const connectMongo = async () => {
   try {
     await connect(env.mongoUrl);
-    console.log("Connected to mongo");
+    logger.info("Connected to mongo");
   } catch (error) {
-    console.log(error);
+    logger.info(error);
     throw "Can not connect to the db";
   }
 };
