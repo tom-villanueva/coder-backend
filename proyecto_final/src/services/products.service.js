@@ -66,9 +66,18 @@ class ProductService {
     }
   }
 
-  async createProduct(product) {
+  async createProduct(product, user) {
     try {
-      const newProduct = await this.dao.get(product);
+      let productToAdd = product;
+
+      if (user.role === "premium") {
+        productToAdd = {
+          ...product,
+          owner: user.email,
+        };
+      }
+
+      const newProduct = await this.dao.create(productToAdd);
 
       return newProduct;
     } catch (error) {

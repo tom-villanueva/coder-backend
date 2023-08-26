@@ -10,6 +10,7 @@ export const ProductSchema = new Schema({
   stock: { type: Number, required: true },
   status: { type: Boolean, required: false, default: true },
   category: { type: String, required: true, max: 100 },
+  owner: { type: String, default: "admin" },
 });
 
 ProductSchema.plugin(paginate);

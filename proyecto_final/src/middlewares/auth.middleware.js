@@ -14,7 +14,49 @@ export const isAdmin = (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized",
+    msg: "Unauthorized, you're not admin nor premium user",
+    data: {},
+  });
+};
+
+export const isPremiumUser = (req, res, next) => {
+  if (req.session.user && req.session.user.role === "premium") {
+    return next();
+  }
+
+  return res.status(401).json({
+    status: "error",
+    msg: "Unauthorized, you're not admin nor premium user",
+    data: {},
+  });
+};
+
+export const canCreateProduct = (req, res, next) => {
+  if (
+    req.session.user &&
+    (req.session.user.role === "admin" || req.session.user.role === "premium")
+  ) {
+    return next();
+  }
+
+  return res.status(401).json({
+    status: "error",
+    msg: "Unauthorized, you're not admin nor premium user",
+    data: {},
+  });
+};
+
+export const canDeleteProduct = (req, res, next) => {
+  if (
+    req.session.user &&
+    (req.session.user.role === "admin" || req.session.user.role === "premium")
+  ) {
+    return next();
+  }
+
+  return res.status(401).json({
+    status: "error",
+    msg: "Unauthorized, you're not admin nor premium user",
     data: {},
   });
 };
