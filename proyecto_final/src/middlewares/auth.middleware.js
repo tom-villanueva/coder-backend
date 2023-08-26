@@ -1,3 +1,5 @@
+import { ProductService } from "../services/index.js";
+
 export const isLoggedIn = (req, res, next) => {
   if (req.session.user) {
     return next();
@@ -41,22 +43,30 @@ export const canCreateProduct = (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized, you're not admin nor premium user",
+    msg: "Unauthorized, you're not allowed to create a product",
     data: {},
   });
 };
 
-export const canDeleteProduct = (req, res, next) => {
-  if (
-    req.session.user &&
-    (req.session.user.role === "admin" || req.session.user.role === "premium")
-  ) {
-    return next();
+export const canDeleteProduct = async (req, res, next) => {
+  if (req.session.user) {
+    if (req.session.user.role === "admin") {
+      return next();
+    }
+    if (req.session.user.role === "premium") {
+      const productToDelete = await ProductService.getProductById(
+        req.params.pid
+      );
+
+      if (productToDelete.owner === req.session.user.email) {
+        return next();
+      }
+    }
   }
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized, you're not admin nor premium user",
+    msg: "Unauthorized, you're not allowed to delete this product",
     data: {},
   });
 };
