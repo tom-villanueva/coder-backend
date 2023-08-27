@@ -42,6 +42,13 @@ export class UnauthenticatedError extends HttpError {
   }
 }
 
+export class ExpiredTokenError extends HttpError {
+  constructor(message) {
+    super(`Expired Token: ${message}`, 400, ErrorCodes.BAD_REQUEST_ERROR);
+    this.name = "ExpiredTokenError";
+  }
+}
+
 export class UnprocessableContentError extends HttpError {
   constructor(message) {
     super(

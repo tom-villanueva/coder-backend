@@ -29,6 +29,7 @@ const env = {
   githubClientScret: process.env.GITHUB_CLIENT_SECRET,
   googleAppEmail: process.env.GOOGLE_APP_EMAIL,
   googleAppPass: process.env.GOOGLE_APP_PASS,
+  clientUrl: process.env.CLIENT_URL,
 };
 
 export default env;

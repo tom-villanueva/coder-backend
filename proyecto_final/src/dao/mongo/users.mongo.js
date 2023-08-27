@@ -18,6 +18,12 @@ export default class Users {
     return user;
   }
 
+  async updateUser(id, user) {
+    const updatedUser = await UserModel.updateOne({ _id: id }, user);
+
+    return updatedUser;
+  }
+
   async create(data) {
     const result = await UserModel.create(data);
     return result;
