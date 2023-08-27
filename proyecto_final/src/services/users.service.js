@@ -55,6 +55,30 @@ class UserService {
       throw new ServerError(error);
     }
   }
+
+  async toggleUserRole(id) {
+    try {
+      const user = await this.dao.getOne(id);
+
+      if (!user) {
+        throw new NotFoundError("User not found");
+      }
+
+      if (user.role === "premium") {
+        user.role = "user";
+      } else if (user.role === "user") {
+        user.role = "premium";
+      } else {
+        throw new BadRequestError("Can't change admin role");
+      }
+
+      await user.save();
+
+      return user;
+    } catch (error) {
+      throw new ServerError(error);
+    }
+  }
 }
 
 export default UserService;

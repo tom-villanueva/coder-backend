@@ -16,7 +16,7 @@ export const isAdmin = (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized, you're not admin nor premium user",
+    msg: "Unauthorized, you're not admin",
     data: {},
   });
 };
