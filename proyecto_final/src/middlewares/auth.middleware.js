@@ -54,12 +54,16 @@ export const canDeleteProduct = async (req, res, next) => {
       return next();
     }
     if (req.session.user.role === "premium") {
-      const productToDelete = await ProductService.getProductById(
-        req.params.pid
-      );
+      try {
+        const productToDelete = await ProductService.getProductById(
+          req.params.pid
+        );
 
-      if (productToDelete.owner === req.session.user.email) {
-        return next();
+        if (productToDelete.owner === req.session.user.email) {
+          return next();
+        }
+      } catch (error) {
+        return next(error);
       }
     }
   }
@@ -79,6 +83,31 @@ export const isCartOwner = (req, res, next) => {
   return res.status(401).json({
     status: "error",
     msg: "Unauthorized: not your cart",
+    data: {},
+  });
+};
+
+export const ownsProduct = async (req, res, next) => {
+  if (req.session.user) {
+    if (req.session.user.role === "premium") {
+      try {
+        const productToAdd = await ProductService.getProductById(
+          req.params.pid
+        );
+        if (productToAdd.owner !== req.session.user.email) {
+          return next();
+        }
+      } catch (error) {
+        return next(error);
+      }
+    } else {
+      return next();
+    }
+  }
+
+  return res.status(401).json({
+    status: "error",
+    msg: "Unauthorized, can't add your own product",
     data: {},
   });
 };

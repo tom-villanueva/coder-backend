@@ -8,7 +8,7 @@ import updateCartProductsController from "../controllers/carts/updateCartProduct
 import updateCartProductController from "../controllers/carts/updateCartProduct.controller.js";
 import deleteCartProductsController from "../controllers/carts/deleteCartProducts.controller.js";
 import purchaseController from "../controllers/carts/purchase.controller.js";
-import { isCartOwner } from "../middlewares/auth.middleware.js";
+import { isCartOwner, ownsProduct } from "../middlewares/auth.middleware.js";
 
 const cartRouter = express.Router();
 
@@ -18,7 +18,12 @@ cartRouter.get("/:cid", getCartProductsController);
 cartRouter.put("/:cid", updateCartProductsController);
 cartRouter.post("/:cid/purchase", purchaseController);
 cartRouter.delete("/:cid", deleteCartProductsController);
-cartRouter.post("/:cid/product/:pid", isCartOwner, addProductToCartController);
+cartRouter.post(
+  "/:cid/product/:pid",
+  isCartOwner,
+  ownsProduct,
+  addProductToCartController
+);
 cartRouter.put("/:cid/products/:pid", isCartOwner, updateCartProductController);
 cartRouter.delete(
   "/:cid/product/:pid",
