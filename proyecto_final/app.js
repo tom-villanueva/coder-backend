@@ -19,6 +19,8 @@ import env from "./config.js";
 import errorHandler from "./src/middlewares/error-handler.middleware.js";
 import addLogger from "./src/middlewares/winston.middleware.js";
 import { logger } from "./src/utils/winston.util.js";
+import swaggerUiExpress from "swagger-ui-express";
+import { specs } from "./src/utils/swagger.util.js";
 
 const port = env.port;
 
@@ -33,6 +35,10 @@ connectMongo();
 app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/src/views");
 app.set("view engine", "handlebars");
+
+console.log(specs);
+// Config swagger
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 // Config de express
 app.use(express.urlencoded({ extended: true }));
@@ -51,6 +57,7 @@ app.use(
 );
 app.use("/static", express.static(__dirname + "/public"));
 
+// Config passport
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
