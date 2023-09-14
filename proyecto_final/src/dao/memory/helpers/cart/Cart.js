@@ -1,5 +1,5 @@
-class Cart{
-  constructor({id, products = []}) {
+class Cart {
+  constructor({ id, products = [] }) {
     this.id = id;
     this.products = products;
   }
@@ -10,16 +10,15 @@ class Cart{
 
   addProduct(product) {
     return new Promise((resolve, reject) => {
-      console.log(product)
       const productIndex = this.products.findIndex((p) => p.pid === product.id);
-  
-      if(productIndex === -1) {
+
+      if (productIndex === -1) {
         const newItem = {
           pid: product.id,
-          quantity: 1
-        }
+          quantity: 1,
+        };
 
-        this.products.push(newItem)
+        this.products.push(newItem);
 
         return resolve(this.products);
       } else {
@@ -27,7 +26,7 @@ class Cart{
 
         return resolve(this.products[productIndex]);
       }
-    })
+    });
   }
 }
 

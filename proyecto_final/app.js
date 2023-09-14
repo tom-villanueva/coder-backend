@@ -36,7 +36,6 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", __dirname + "/src/views");
 app.set("view engine", "handlebars");
 
-console.log(specs);
 // Config swagger
 app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
