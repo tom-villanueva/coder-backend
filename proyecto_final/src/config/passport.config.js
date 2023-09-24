@@ -64,6 +64,9 @@ export function initializePassport() {
             return done(null, false, { message: "Wrong password" });
           }
 
+          user.last_connection = Date.now();
+          await user.save();
+
           return done(null, user);
         } catch (error) {
           logger.error(error);
@@ -120,10 +123,12 @@ export function initializePassport() {
             return done(null, userCreated);
           } else {
             logger.warn("User already exists");
+            user.last_connection = Date.now();
+            await user.save();
             return done(null, user);
           }
         } catch (e) {
-          logger.error("Error en auth github");
+          logger.error("Error in auth github");
           return done(e);
         }
       }

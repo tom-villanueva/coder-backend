@@ -211,6 +211,21 @@ class UserService {
       throw new ServerError(error);
     }
   }
+
+  async deleteUser(id) {
+    try {
+      const user = await this.dao.getOne(id);
+
+      if (user.role === "admin") {
+        throw new BadRequestError("Can't delete admin user");
+      }
+      const deletedUser = await this.dao.delete(id);
+
+      return deletedUser;
+    } catch (error) {
+      throw new ServerError(error);
+    }
+  }
 }
 
 export default UserService;

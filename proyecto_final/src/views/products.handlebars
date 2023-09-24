@@ -4,6 +4,10 @@
     {{firstName}}
     {{lastName}}</h2>
   <h3 class="text-bold text-sm text-white neon-text">Role: {{role}}</h3>
+  <a
+    class="text-bold text-sm text-white neon-text"
+    href="http://localhost:8080/profile"
+  >PROFILE</a>
 {{/with}}
 <ul class="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-4">
   {{#each docs}}
@@ -49,4 +53,5 @@
     >Siguiente</a>
   {{/if}}
 </ul>
-<script src="../../static/index.js"></script>
+<script src="../../static/config.js"></script>
+<script type="module" src="../../static/index.js"></script>

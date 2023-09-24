@@ -1,6 +1,8 @@
+import { UnauthenticatedError } from "../../utils/error.util.js";
+
 const loginController = async (req, res, next) => {
   if (!req.user) {
-    return res.json({ error: "invalid credentials" });
+    next(new UnauthenticatedError("Invalid Credentials"));
   }
   req.session.user = {
     _id: req.user._id,

@@ -13,6 +13,8 @@ const UserModel = model(
       type: Schema.Types.ObjectId,
       ref: "cart",
     },
+    documents: { type: Array, required: false, default: [] },
+    last_connection: { type: Date, default: Date.now },
   })
 );
 

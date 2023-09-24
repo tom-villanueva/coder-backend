@@ -24,6 +24,12 @@ export default class Users {
     return updatedUser;
   }
 
+  async delete(id) {
+    const deletedUser = await UserModel.deleteOne({ _id: id });
+
+    return deletedUser;
+  }
+
   async create(data) {
     const result = await UserModel.create(data);
     return result;

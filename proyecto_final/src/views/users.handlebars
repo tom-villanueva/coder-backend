@@ -1,0 +1,25 @@
+<h1 class="text-bold text-xl text-white neon-text">Users</h1>
+<ul class="flex flex-col gap-4">
+  {{#each users}}
+    <li class="flex gap-4 text-white">
+      <p class="text-gray-300">{{this.firstName}} {{this.lastName}}</p>
+      |
+      <p class="text-gray-300">{{this.email}}</p>
+      |
+      <p class="text-gray-300">{{this.role}}</p>
+      |
+      <button
+        class="rounded bg-gray-500 p-1"
+        onclick="changeRole('{{this.id}}');"
+      >CHANGE ROLE</button>
+      <button
+        class="rounded bg-gray-500 p-1"
+        onclick="deleteUser('{{this.id}}')"
+      >DELETE</button>
+    </li>
+  {{else}}
+    <p>No users</p>
+  {{/each}}
+</ul>
+<script src="../../static/config.js"></script>
+<script src="../../static/indexUsers.js"></script>
