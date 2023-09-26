@@ -6,3 +6,7 @@ errors.log
 .env.production
 proyecto_final/src/resources/carts.json
 proyecto_final/src/resources/products.json
+
+proyecto_final/public/documents/**
+proyecto_final/public/products/**
+proyecto_final/public/profiles/**

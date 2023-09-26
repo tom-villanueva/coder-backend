@@ -1,3 +1,4 @@
+import env from "../../../config.js";
 import { ProductService } from "../../services/index.js";
 
 const renderProductsController = async (req, res, next) => {
@@ -14,6 +15,7 @@ const renderProductsController = async (req, res, next) => {
     user: {
       ...req.session.user,
     },
+    clientUrl: env.clientUrl,
   };
 
   res.render("products", context);

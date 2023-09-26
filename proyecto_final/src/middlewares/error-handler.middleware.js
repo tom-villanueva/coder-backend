@@ -9,5 +9,7 @@ export default (error, req, res, next) => {
   }
 
   req.logger.fatal(error.message);
-  return res.status(500).send({ status: "error", error: "Unexpected Error!" });
+  return res
+    .status(500)
+    .send({ status: "error", error: `Unexpected Error: ${error.message}` });
 };

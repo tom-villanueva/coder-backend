@@ -30,6 +30,24 @@ export default class Users {
     return deletedUser;
   }
 
+  async deleteInactiveUsers() {
+    const today = new Date();
+    const daysOfInactivity = 2;
+    const twoDaysBefore = today.setDate(today.getDate() - daysOfInactivity);
+
+    const deletedUsers = await UserModel.deleteMany({
+      last_connection: { $lte: twoDaysBefore },
+    });
+
+    return deletedUsers;
+  }
+
+  async uploadDocuments(id, documents) {
+    const updatedUser = await UserModel.updateOne({ _id: id }, { documents });
+
+    return updatedUser;
+  }
+
   async create(data) {
     const result = await UserModel.create(data);
     return result;

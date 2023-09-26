@@ -226,6 +226,41 @@ class UserService {
       throw new ServerError(error);
     }
   }
+
+  async deleteInactiveUsers() {
+    try {
+      const deletedUsers = await this.dao.deleteInactiveUsers();
+
+      return deletedUsers;
+    } catch (error) {
+      throw new ServerError(error);
+    }
+  }
+
+  async uploadDocuments(id, documents) {
+    try {
+      const user = await this.dao.getOne(id);
+      if (!user) {
+        throw new NotFoundError("User not found with that id");
+      }
+
+      let newDocuments = documents.map((file) => ({
+        name: file.filename,
+        reference: file.path,
+      }));
+
+      newDocuments = [...user.documents, ...newDocuments];
+
+      const updatedUser = await this.dao.uploadDocuments(id, newDocuments);
+      return updatedUser;
+    } catch (error) {
+      if (error.name === "NotFoundError") {
+        throw error;
+      }
+
+      throw new ServerError(error);
+    }
+  }
 }
 
 export default UserService;
