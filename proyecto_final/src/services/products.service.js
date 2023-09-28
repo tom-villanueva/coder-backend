@@ -3,6 +3,7 @@ import {
   NotFoundError,
   ServerError,
 } from "../utils/error.util.js";
+import { sendEmail } from "../utils/email.util.js";
 
 class ProductService {
   constructor(dao) {
@@ -123,10 +124,25 @@ class ProductService {
   async deleteProduct(id) {
     try {
       this.checkId(id);
+
+      const product = await this.getProductById(id);
+
       const deletedProduct = await this.dao.deleteProduct(id);
 
       if (deletedProduct.deletedCount === 0) {
         throw new NotFoundError("Product not found with that id");
+      }
+
+      if (product.owner) {
+        const emailHtml = `
+        <html>
+          <body>
+            <h1>Hello</h1>
+            <p>Your product ${product.title} has been deleted</p>
+          </body>
+        </html>`;
+
+        sendEmail(product.owner, "Information: product deletion", emailHtml);
       }
 
       return deletedProduct;

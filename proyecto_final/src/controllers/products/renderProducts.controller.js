@@ -16,6 +16,7 @@ const renderProductsController = async (req, res, next) => {
       ...req.session.user,
     },
     clientUrl: env.clientUrl,
+    isAdmin: req.session.user.role === "admin",
   };
 
   res.render("products", context);

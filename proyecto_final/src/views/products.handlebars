@@ -9,9 +9,14 @@
     href="{{clientUrl}}/profile"
   >PROFILE
   </a>
-  <a class="text-bold text-sm text-white neon-text" href="{{clientUrl}}/users">
-    USERS
-  </a>
+  {{#if isAdmin}}
+    <a
+      class="text-bold text-sm text-white neon-text"
+      href="{{clientUrl}}/users"
+    >
+      USERS
+    </a>
+  {{/if}}
 {{/with}}
 <ul class="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-4">
   {{#each docs}}
