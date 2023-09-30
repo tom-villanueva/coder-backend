@@ -1,3 +1,3 @@
 const constants = {
-  clientUrl: "http://localhost:8080",
+  clientUrl: "https://coder-backend-final.onrender.com",
 };
