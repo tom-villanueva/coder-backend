@@ -1,16 +1,29 @@
-<h1>Cart Detail</h1>
+<h1 class="text-bold text-xl text-white neon-text">Cart Detail</h1>
 <section>
-  <ul class="flex column gap-4">
+  <ul class="flex flex-col gap-4">
     {{#each products}}
       <li
-        class="w-full cursor-pointer p-2 border-2 border-blue-100 border-opacity-100 py-4"
+        class="w-full p-2 border-2 border-blue-100 border-opacity-100 py-4 flex gap-2"
       >
-        <p>Name: {{this.title}}</p>
-        <p>${{this.price}}</p>
-        <p>Quantity: {{this.quantity}}</p>
+        <p class="text-white">Name: {{this.title}}</p>
+        <p class="text-white">${{this.price}}</p>
+        <p class="text-white">Quantity: {{this.quantity}}</p>
       </li>
     {{else}}
-      <p>No products</p>
+      <p class="text-white text-lg">No products</p>
     {{/each}}
   </ul>
+  {{#with total}}
+    <p class="text-white text-lg">TOTAL: $<span>{{this.total}}</span></p>
+  {{/with}}
+  {{#with cart}}
+    <form action="/api/carts/{{this.id}}/purchase" method="post">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+      >
+        BUY
+      </button>
+    </form>
+  {{/with}}
 </section>

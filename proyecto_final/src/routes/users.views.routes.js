@@ -8,6 +8,7 @@ import renderUsersController from "../controllers/users/renderUsers.controller.j
 
 const viewsUsersRouter = express.Router();
 
+viewsUsersRouter.get("/", (req, res) => res.redirect("/login"));
 viewsUsersRouter.get("/login", renderLoginController);
 viewsUsersRouter.get("/register", renderRegisterController);
 viewsUsersRouter.get("/profile", isLoggedIn, renderProfileController);

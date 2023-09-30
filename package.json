@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./proyecto_final/app.js",
+    "prod": "nodemon ./proyecto_final/app.js --mode production",
     "test": "mocha ./proyecto_final/test/**/*.js"
   },
   "keywords": [],

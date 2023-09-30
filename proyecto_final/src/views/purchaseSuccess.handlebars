@@ -1,0 +1,15 @@
+<h1 class="text-bold text-2xl text-white neon-text">Your purchase was a success!</h1>
+<section>
+  {{#with ticket}}
+    <p class="text-lg text-white">YOUR TICKET CODE:
+      <span class="font-bold">{{this.code}}</span></p>
+  {{/with}}
+</section>
+<section class="flex align-center justify-center flex-col gap-2 mt-4">
+  <a
+    href="/"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  >RETURN TO HOME PAGE</a>
+  <img src="../../static/gatito.webp" width="250" height="200" />
+  <p class="text-white text-lg text-center">Thank you!</p>
+</section>
