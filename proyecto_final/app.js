@@ -32,7 +32,16 @@ app.use(addLogger);
 connectMongo();
 
 // Config de express-handlebars
-app.engine("handlebars", handlebars.engine());
+app.engine(
+  "handlebars",
+  handlebars.engine({
+    helpers: {
+      isAdmin: (value) => {
+        return value === "admin";
+      },
+    },
+  })
+);
 app.set("views", __dirname + "/src/views");
 app.set("view engine", "handlebars");
 

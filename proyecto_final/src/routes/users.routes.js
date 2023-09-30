@@ -16,7 +16,14 @@ usersRouter.delete("/", isAdmin, deleteInactiveUsersController);
 usersRouter.delete("/:uid", isAdmin, deleteUserController);
 usersRouter.post(
   "/:uid/documents",
-  uploader.array("documents"),
+  uploader.fields([
+    { name: "identification" },
+    { name: "residence" },
+    { name: "account_state" },
+    { name: "profile" },
+    { name: "product" },
+  ]),
+  // uploader.array("documents"),
   uploadDocumentsController
 );
 usersRouter.put("/premium/:uid", isAdmin, toggleUsersRoleController);

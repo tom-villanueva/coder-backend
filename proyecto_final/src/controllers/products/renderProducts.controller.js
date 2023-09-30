@@ -3,6 +3,7 @@ import { ProductService } from "../../services/index.js";
 
 const renderProductsController = async (req, res, next) => {
   const products = await ProductService.getAllProducts(req.query);
+
   const context = {
     ...products,
     docs: products.docs.map((product) => ({
@@ -16,7 +17,6 @@ const renderProductsController = async (req, res, next) => {
       ...req.session.user,
     },
     clientUrl: env.clientUrl,
-    isAdmin: req.session.user.role === "admin",
   };
 
   res.render("products", context);

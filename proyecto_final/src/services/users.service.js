@@ -73,6 +73,27 @@ class UserService {
       if (user.role === "premium") {
         user.role = "user";
       } else if (user.role === "user") {
+        const neededDocuments = [
+          "identification",
+          "residence",
+          "account_state",
+        ];
+
+        const userDocuments = user.documents.map(
+          (document) => document.name.split(".")[0]
+        );
+
+        let equals = false;
+        if (userDocuments.length > 0) {
+          equals = neededDocuments.every((document) =>
+            userDocuments.includes(document)
+          );
+        }
+
+        if (!equals) {
+          throw new BadRequestError("User doesn't have necessary files");
+        }
+
         user.role = "premium";
       } else {
         throw new BadRequestError("Can't change admin role");
@@ -244,10 +265,14 @@ class UserService {
         throw new NotFoundError("User not found with that id");
       }
 
-      let newDocuments = documents.map((file) => ({
-        name: file.filename,
-        reference: file.path,
-      }));
+      let newDocuments = [];
+
+      for (const file of Object.values(documents)) {
+        newDocuments.push({
+          name: file[0].filename,
+          reference: file[0].path,
+        });
+      }
 
       newDocuments = [...user.documents, ...newDocuments];
 

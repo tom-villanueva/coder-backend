@@ -1,21 +1,36 @@
 import multer from "multer";
 import { __dirname } from "../../dirname.util.js";
-import { BadRequestError } from "./error.util.js";
-const acceptedTypes = ["profiles", "documents", "products"];
+import { existsSync, mkdirSync } from "fs";
+import * as path from "path";
+
+const acceptedDocuments = ["identification", "residence", "account_state"];
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let type = req.body.type;
-    let path = `/${type}`;
+    let path;
 
-    if (!req.body.type || !acceptedTypes.includes(req.body.type)) {
-      cb(new BadRequestError("Incorrect type of document"));
+    if (acceptedDocuments.includes(file.fieldname)) {
+      path = "/documents";
+    } else if (file.fieldname === "profile") {
+      path = "/profiles";
+    } else if (file.fieldname === "product") {
+      path = "/products";
+    }
+
+    path += `/${req.session.user._id}`;
+
+    if (!existsSync(path)) {
+      mkdirSync(`${__dirname}/public/${path}`, { recursive: true });
     }
 
     cb(null, __dirname + "/public" + path);
   },
   filename: (req, file, cb) => {
-    cb(null, file.fieldname);
+    if (file.fieldname === "product") {
+      cb(null, file.originalname);
+    } else {
+      cb(null, file.fieldname + path.extname(file.originalname));
+    }
   },
 });
 

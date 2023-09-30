@@ -9,7 +9,7 @@
     href="{{clientUrl}}/profile"
   >PROFILE
   </a>
-  {{#if isAdmin}}
+  {{#if (isAdmin role)}}
     <a
       class="text-bold text-sm text-white neon-text"
       href="{{clientUrl}}/users"
