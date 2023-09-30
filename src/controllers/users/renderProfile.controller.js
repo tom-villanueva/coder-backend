@@ -13,20 +13,24 @@ const exists = (documents, filename) => {
 };
 
 const renderProfileController = async (req, res, next) => {
-  const { documents } = await UserService.getUserById(req.session.user._id);
+  try {
+    const { documents } = await UserService.getUserById(req.session.user._id);
 
-  const user = {
-    id: req.session.user._id,
-    email: req.session.user.email,
-    firstName: req.session.user.firstName,
-    lastName: req.session.user.lastName,
-    age: req.session.user.age,
-    hasIdentification: exists(documents, "identification"),
-    hasResidence: exists(documents, "residence"),
-    hasAccountState: exists(documents, "account_state"),
-  };
+    const user = {
+      id: req.session.user._id,
+      email: req.session.user.email,
+      firstName: req.session.user.firstName,
+      lastName: req.session.user.lastName,
+      age: req.session.user.age,
+      hasIdentification: exists(documents, "identification"),
+      hasResidence: exists(documents, "residence"),
+      hasAccountState: exists(documents, "account_state"),
+    };
 
-  res.render("profile", { user: user });
+    res.render("profile", { user: user });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export default renderProfileController;
