@@ -5,9 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./proyecto_final/app.js",
-    "prod": "nodemon ./proyecto_final/app.js --mode production",
-    "test": "mocha ./proyecto_final/test/**/*.js"
+    "start": "nodemon ./app.js",
+    "prod": "nodemon ./app.js --mode production",
+    "test": "mocha ./test/**/*.js"
   },
   "keywords": [],
   "author": "",

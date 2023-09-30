@@ -1,10 +1,5 @@
 # Coderhouse backend course repository
 
-## Directories
-
-- desafios: challenges directory.
-- proyecto_final: final project directory
-
 ## Instructions
 
 - To execute final project make sure you're on the root directory, then:
@@ -15,16 +10,6 @@ npm start
 ```
 
 - Fill the values in a .env.development file, following the .env.example
-
-- To execute challenges:
-
-```bash
-cd desafios
-cd desafio_x
-node test.js
-or
-node app.js
-```
 
 ## Postman
 
