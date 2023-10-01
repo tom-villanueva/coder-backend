@@ -16,6 +16,7 @@ const renderProductsController = async (req, res, next) => {
         id: product._id.toString(),
         title: product.title,
         description: product.description,
+        category: product.category,
         price: product.price,
       })),
       ...req.query,
