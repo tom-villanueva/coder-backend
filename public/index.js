@@ -31,6 +31,7 @@ const addProductToCart = async (productId) => {
 
   if (res.isConfirmed) {
     try {
+      document.getElementById("spinner").classList.remove("hidden");
       const cart = await getCart();
       const response = await fetch(
         `${constants.clientUrl}/api/carts/${cart}/product/${productId}`,
@@ -40,6 +41,8 @@ const addProductToCart = async (productId) => {
       );
 
       const addedProduct = await response.json();
+
+      document.getElementById("spinner").classList.add("hidden");
 
       const res = await Swal.fire({
         title: "Success!",

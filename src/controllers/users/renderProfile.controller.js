@@ -22,9 +22,11 @@ const renderProfileController = async (req, res, next) => {
       firstName: req.session.user.firstName,
       lastName: req.session.user.lastName,
       age: req.session.user.age,
+      profile_pic: documents.find((doc) => doc.name.includes("profile"))?.name,
       hasIdentification: exists(documents, "identification"),
       hasResidence: exists(documents, "residence"),
       hasAccountState: exists(documents, "account_state"),
+      hasProfilePic: exists(documents, "profile"),
     };
 
     res.render("profile", { user: user });

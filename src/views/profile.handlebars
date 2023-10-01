@@ -2,6 +2,14 @@
   {{#with user}}
     <h2 class="text-3xl text-center text-white neon-text mb-8">Profile</h2>
     <div class="mb-4">
+      <h3 class="text-white text-sm font-bold mb-2">Profile Pic</h3>
+      <img
+        class="h-24 w-24 rounded"
+        src="../../static/profiles/{{id}}/{{profile_pic}}"
+        alt="user profile pic"
+      />
+    </div>
+    <div class="mb-4">
       <h3 class="text-white text-sm font-bold mb-2">Email</h3>
       <p class="bg-gray-700 rounded p-2 text-gray-300">{{email}}</p>
     </div>
@@ -24,7 +32,7 @@
       class="flex items-center justify-center flex-col"
     >
       {{#if hasIdentification}}
-        <p>
+        <p class="text-white">
           Already uploaded Identification
         </p>
       {{else}}
@@ -42,7 +50,7 @@
       {{/if}}
 
       {{#if hasResidence}}
-        <p>
+        <p class="text-white">
           Already uploaded Residence
         </p>
       {{else}}
@@ -60,7 +68,7 @@
       {{/if}}
 
       {{#if hasAccountState}}
-        <p>
+        <p class="text-white">
           Already uploaded Account State
         </p>
       {{else}}
@@ -76,7 +84,23 @@
           placeholder="Add account state here"
         />
       {{/if}}
-      <input class="invisible" name="type" value="documents" />
+      {{#if hasProfilePic}}
+        <p class="text-white">
+          Already uploaded profile pic
+        </p>
+      {{else}}
+        <label
+          class="block text-white text-sm font-bold mb-2"
+          for="profile"
+        >Profile Pic</label>
+        <input
+          type="file"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="profile"
+          name="profile"
+          placeholder="Add profile pic here"
+        />
+      {{/if}}
       <button
         class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="submit"
