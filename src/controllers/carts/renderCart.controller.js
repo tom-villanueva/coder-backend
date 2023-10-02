@@ -5,6 +5,7 @@ const renderCartController = async (req, res, next) => {
     const products = await CartService.getCartProducts(req.params.cid);
     const context = {
       products: products.map((product) => ({
+        id: product.product._id,
         title: product.product.title,
         price: product.product.price,
         quantity: product.quantity,

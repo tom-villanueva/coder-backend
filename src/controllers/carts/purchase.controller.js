@@ -5,12 +5,8 @@ const purchaseController = async (req, res, next) => {
     const result = await CartService.purchase(req.params.cid, req.session.user);
 
     return res.redirect(`/carts/purchase-success?ticket=${result.ticket.code}`);
-    // return res.status(201).json({
-    //   status: "success",
-    //   msg: "Purchase completed",
-    //   data: result,
-    // });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

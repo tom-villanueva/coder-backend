@@ -7,13 +7,18 @@ const getCart = async () => {
       }
     );
     const user = await response.json();
+
+    if (!response.ok) {
+      throw user;
+    }
+
     storedCart = user.data.cart;
 
     return storedCart;
   } catch (error) {
     Swal.fire({
       title: "Error!",
-      text: `${error.message}`,
+      text: `${error.error ?? error.message}`,
       icon: "error",
       confirmButtonText: "OK",
     });
@@ -44,6 +49,10 @@ const addProductToCart = async (productId) => {
 
       document.getElementById("spinner").classList.add("hidden");
 
+      if (!response.ok) {
+        throw addedProduct;
+      }
+
       const res = await Swal.fire({
         title: "Success!",
         text: `${addedProduct.msg}`,
@@ -59,7 +68,7 @@ const addProductToCart = async (productId) => {
     } catch (error) {
       Swal.fire({
         title: "Error!",
-        text: `${error.message}`,
+        text: `${error.error ?? error.message}`,
         icon: "error",
         confirmButtonText: "OK",
       });

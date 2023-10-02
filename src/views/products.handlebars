@@ -132,6 +132,7 @@
   </form>
 </section>
 
+{{! Products list }}
 <ul class="grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-4">
   {{#each docs}}
     <li class="bg-gray-800 shadow-lg rounded-lg p-8 max-w-sm w-full">
@@ -158,6 +159,7 @@
 </ul>
 <p class="mt-4 text-md text-white neon-text">Total Pages: {{totalPages}}</p>
 
+{{! Pagination }}
 <ul class="inline-flex -space-x-px">
   {{#if hasPrevPage}}
     <a

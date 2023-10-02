@@ -37,6 +37,10 @@
         <p class="text-white">Name: {{this.title}}</p>
         <p class="text-white">${{this.price}}</p>
         <p class="text-white">Quantity: {{this.quantity}}</p>
+        <button
+          class="rounded bg-gray-500 p-1"
+          onclick="deleteProductFromCart('{{this.id}}')"
+        >DELETE</button>
       </li>
     {{else}}
       <p class="text-white text-lg">No products</p>
@@ -46,18 +50,29 @@
     <p class="text-white text-lg">TOTAL: $<span>{{this.total}}</span></p>
   {{/with}}
   {{#with cart}}
-    <form action="/api/carts/{{this.id}}/purchase" method="post">
-      <button
-        onclick="setSpinner()"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="submit"
-      >
-        BUY
-      </button>
-    </form>
+    <section class="flex gap-2">
+      <div>
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onclick="buyCart('{{this.id}}');"
+          type="button"
+        >
+          BUY
+        </button>
+      </div>
+      <div>
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          onclick="clearCart('{{this.id}}');"
+          type="button"
+        >
+          CLEAR CART
+        </button>
+      </div>
+    </section>
   {{/with}}
 </section>
-<script>
-  function setSpinner() {
-  document.getElementById("spinner").classList.remove("hidden"); }
-</script>
+{{!-- prettier-ignore --}}
+<script src="../../static/config.js"></script>
+<script src="../../static/index.js"></script>
+<script src="../../static/indexCarts.js"></script>
