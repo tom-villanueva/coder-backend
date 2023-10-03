@@ -4,6 +4,7 @@ import {
   ServerError,
 } from "../utils/error.util.js";
 import { sendEmail } from "../utils/email.util.js";
+import { UserService } from "./index.js";
 
 class ProductService {
   constructor(dao) {
@@ -67,7 +68,7 @@ class ProductService {
     }
   }
 
-  async createProduct(product, user) {
+  async createProduct(product, user, thumbnail) {
     try {
       let productToAdd = product;
 
@@ -75,9 +76,11 @@ class ProductService {
         productToAdd = {
           ...product,
           owner: user.email,
+          thumbnail: thumbnail.path,
         };
       }
 
+      await UserService.uploadDocument(user.id, thumbnail);
       const newProduct = await this.dao.create(productToAdd);
 
       return newProduct;
@@ -90,10 +93,15 @@ class ProductService {
     }
   }
 
-  async updateProduct(id, product) {
+  async updateProduct(id, product, thumbnail, user) {
     try {
       this.checkId(id);
-      const updatedProduct = await this.dao.updateProduct(id, product);
+
+      await UserService.uploadDocument(user._id, thumbnail);
+      const updatedProduct = await this.dao.updateProduct(id, {
+        ...product,
+        thumbnail: thumbnail.path,
+      });
 
       if (updatedProduct.modifiedCount === 0) {
         throw new NotFoundError("Product not found with that id");

@@ -16,7 +16,7 @@ export const isAdmin = (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized, you're not admin",
+    error: "Unauthorized, you're not admin",
     data: {},
   });
 };
@@ -28,7 +28,7 @@ export const isPremiumUser = (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized, you're not admin nor premium user",
+    error: "Unauthorized, you're not admin nor premium user",
     data: {},
   });
 };
@@ -43,7 +43,7 @@ export const canCreateProduct = (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized, you're not allowed to create a product",
+    error: "Unauthorized, you're not allowed to create a product",
     data: {},
   });
 };
@@ -70,7 +70,7 @@ export const canDeleteProduct = async (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized, you're not allowed to delete this product",
+    error: "Unauthorized, you're not allowed to delete this product",
     data: {},
   });
 };
@@ -82,7 +82,7 @@ export const isCartOwner = (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized: not your cart",
+    error: "Unauthorized: not your cart",
     data: {},
   });
 };
@@ -107,7 +107,7 @@ export const ownsProduct = async (req, res, next) => {
 
   return res.status(401).json({
     status: "error",
-    msg: "Unauthorized, can't add your own product",
+    error: "Unauthorized, can't add your own product",
     data: {},
   });
 };

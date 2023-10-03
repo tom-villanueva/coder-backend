@@ -258,6 +258,31 @@ class UserService {
     }
   }
 
+  async uploadDocument(id, document) {
+    try {
+      const user = await this.dao.getOne(id);
+      if (!user) {
+        throw new NotFoundError("User not found with that id");
+      }
+
+      const newDocument = {
+        name: document.filename,
+        reference: document.path,
+      };
+
+      const newDocuments = [...user.documents, newDocument];
+
+      const updatedUser = await this.dao.uploadDocuments(id, newDocuments);
+      return updatedUser;
+    } catch (error) {
+      if (error.name === "NotFoundError") {
+        throw error;
+      }
+
+      throw new ServerError(error);
+    }
+  }
+
   async uploadDocuments(id, documents) {
     try {
       const user = await this.dao.getOne(id);

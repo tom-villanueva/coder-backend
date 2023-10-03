@@ -9,13 +9,24 @@ import {
   canDeleteProduct,
   isAdmin,
 } from "../middlewares/auth.middleware.js";
+import { uploader } from "../utils/storage.util.js";
 
 const productsRouter = express.Router();
 
 productsRouter.get("/", getAllProductsController);
 productsRouter.get("/:pid", getProductByIdController);
-productsRouter.post("/", canCreateProduct, createProductController);
-productsRouter.put("/:pid", isAdmin, updateProductController);
+productsRouter.post(
+  "/",
+  canCreateProduct,
+  uploader.single("thumbnail"),
+  createProductController
+);
+productsRouter.put(
+  "/:pid",
+  isAdmin,
+  uploader.single("thumbnail"),
+  updateProductController
+);
 productsRouter.delete("/:pid", canDeleteProduct, deleteProductController);
 
 export default productsRouter;

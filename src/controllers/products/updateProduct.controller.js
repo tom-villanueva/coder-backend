@@ -4,7 +4,9 @@ const updateProductController = async (req, res, next) => {
   try {
     const product = await ProductService.updateProduct(
       req.params.pid,
-      req.body
+      req.body,
+      req.file,
+      req.session.user
     );
 
     return res.status(201).json({

@@ -39,6 +39,9 @@ app.engine(
       isAdmin: (value) => {
         return value === "admin";
       },
+      isPremium: (value) => {
+        return value === "premium";
+      },
     },
   })
 );

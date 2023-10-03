@@ -1,6 +1,7 @@
 import env from "../../../config.js";
 import { ProductService } from "../../services/index.js";
 import { CartService } from "../../services/index.js";
+import { pathToPublic } from "../../utils/storage.util.js";
 
 const renderProductsController = async (req, res, next) => {
   try {
@@ -18,6 +19,8 @@ const renderProductsController = async (req, res, next) => {
         description: product.description,
         category: product.category,
         price: product.price,
+        thumbnail: pathToPublic(product.thumbnail),
+        status: product.status,
       })),
       ...req.query,
       user: {

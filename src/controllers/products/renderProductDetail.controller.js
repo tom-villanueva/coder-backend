@@ -1,4 +1,5 @@
 import { ProductService } from "../../services/index.js";
+import { pathToPublic } from "../../utils/storage.util.js";
 
 const renderProductDetailController = async (req, res, next) => {
   try {
@@ -11,6 +12,8 @@ const renderProductDetailController = async (req, res, next) => {
         category: product.category,
         stock: product.stock,
         price: product.price,
+        status: product.status,
+        thumbnail: pathToPublic(product.thumbnail),
       },
     };
 

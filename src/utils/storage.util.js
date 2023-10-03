@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
       path = "/documents";
     } else if (file.fieldname === "profile") {
       path = "/profiles";
-    } else if (file.fieldname === "product") {
+    } else if (file.fieldname === "thumbnail") {
       path = "/products";
     }
 
@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
     cb(null, __dirname + "/public" + path);
   },
   filename: (req, file, cb) => {
-    if (file.fieldname === "product") {
+    if (file.fieldname === "thumbnail") {
       cb(null, file.originalname);
     } else {
       cb(null, file.fieldname + path.extname(file.originalname));
@@ -35,3 +35,9 @@ const storage = multer.diskStorage({
 });
 
 export const uploader = multer({ storage });
+
+export const pathToPublic = (path) => {
+  const indexPublic = path.indexOf("products");
+
+  return `../../static/${path.slice(indexPublic)}`;
+};

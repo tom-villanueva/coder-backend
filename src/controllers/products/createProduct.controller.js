@@ -6,7 +6,8 @@ const createProductController = async (req, res, next) => {
     const newProduct = productDTO(req.body);
     const product = await ProductService.createProduct(
       newProduct,
-      req.session.user
+      req.session.user,
+      req.file
     );
 
     return res.status(201).json({

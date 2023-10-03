@@ -1,0 +1,172 @@
+<h1 class="text-bold text-xl text-white ">Users</h1>
+<button
+  id="createButton"
+  class="mb-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  onclick="resetFields()"
+>
+  ADD PRODUCT
+</button>
+
+<section class="grid grid-cols-2 gap-2">
+  <ul class="flex flex-col gap-4">
+    {{#each products}}
+      <li class="flex gap-4 text-white">
+        <p class="text-gray-300">{{this.title}}</p>
+        |
+        <p class="text-gray-300">{{this.description}}</p>
+        |
+        <p class="text-gray-300">{{this.owner}}</p>
+        |
+        <button
+          id="editButton"
+          class="rounded bg-blue-500 p-1"
+          onclick="setFormFieldsEdit('{{this.id}}');"
+        >
+          EDIT
+        </button>
+        <button
+          class="rounded bg-gray-500 p-1"
+          onclick="deleteProduct('{{this.id}}')"
+        >DELETE</button>
+      </li>
+    {{else}}
+      <p>No Products</p>
+    {{/each}}
+  </ul>
+
+  <form id="productForm" class="hidden">
+    <div class="mb-4">
+      <label
+        class="block text-white text-sm font-bold mb-2"
+        for="title"
+      >Title</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="title"
+        name="title"
+        type="text"
+        placeholder="title"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-white text-sm font-bold mb-2"
+        for="description"
+      >Description</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="description"
+        name="description"
+        type="text"
+        placeholder="description"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-white text-sm font-bold mb-2"
+        for="category"
+      >category</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="category"
+        name="category"
+        type="text"
+        placeholder="category"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-white text-sm font-bold mb-2"
+        for="stock"
+      >Stock</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="stock"
+        name="stock"
+        type="number"
+        placeholder="stock"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-white text-sm font-bold mb-2"
+        for="code"
+      >Code</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="code"
+        name="code"
+        type="text"
+        placeholder="code"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-white text-sm font-bold mb-2"
+        for="price"
+      >Price</label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="price"
+        name="price"
+        type="number"
+        placeholder="price"
+        required
+      />
+    </div>
+    <div class="mb-4">
+      <label
+        class="block text-white text-sm font-bold mb-2"
+        for="status"
+      >Status</label>
+      <select
+        name="status"
+        id="status"
+        class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      >
+        <option value="true" selected>Active</option>
+        <option value="false">Inactive</option>
+      </select>
+    </div>
+    <section class="flex justify-between items-center">
+      <div class="mb-4">
+        <label
+          class="block text-white text-sm font-bold mb-2"
+          for="thumbnail"
+        >Thumbnail</label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="thumbnail"
+          name="thumbnail"
+          type="file"
+          placeholder="thumbnail"
+        />
+      </div>
+      <img
+        class="w-32 object-cover rounded"
+        id="productImage"
+        src=
+        alt="selected product image"
+      />
+    </section>
+    <button
+      class="mb-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      type="submit"
+    >
+      SAVE
+    </button>
+    <button
+      id="cancelButton"
+      class="mb-10 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    >
+      CANCELAR
+    </button>
+  </form>
+</section>
+<script src="../../static/config.js"></script>
+<script src="../../static/indexProducts.js"></script>
