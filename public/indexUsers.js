@@ -24,3 +24,13 @@ const deleteInactiveUsers = async () => {
     reloadWindow
   );
 };
+
+const uploadDocuments = async (e, id) => {
+  e.preventDefault();
+  apiCall(
+    "Upload documents?",
+    `${constants.clientUrl}/api/users/${id}/documents`,
+    "POST",
+    reloadWindow
+  );
+};

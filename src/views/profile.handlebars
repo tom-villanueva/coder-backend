@@ -32,9 +32,8 @@
       <div>
         <h2 class="text-3xl text-center text-white mb-8">Documents</h2>
         <form
-          action="/api/users/{{id}}/documents"
-          method="POST"
-          enctype="multipart/form-data"
+          id="documentsForm"
+          onsubmit="uploadDocuments(event, '{{id}}')"
           class="flex items-center justify-center flex-col"
         >
           {{#if hasIdentification}}
@@ -126,3 +125,5 @@
     </section>
   {{/with}}
 </div>
+<script src="../../static/config.js"></script>
+<script src="../../static/indexUsers.js"></script>
