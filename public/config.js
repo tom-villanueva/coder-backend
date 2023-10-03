@@ -1,6 +1,6 @@
 const constants = {
-  //clientUrl: "https://coder-backend-final.onrender.com",
-  clientUrl: "http://localhost:8080",
+  clientUrl: "https://coder-backend-final.onrender.com",
+  // clientUrl: "http://localhost:8080",
 };
 
 const reloadWindow = async () => {
@@ -57,7 +57,6 @@ const apiCall = async (title, url, method, callbackSuccess, formData) => {
 
       return jsonRes.data;
     } catch (error) {
-      console.log(error);
       Swal.fire({
         title: "Error!",
         text: `${error.error ?? error.message}`,

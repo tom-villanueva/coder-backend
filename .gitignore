@@ -4,9 +4,9 @@ errors.log
 .env
 .env.development
 .env.production
-proyecto_final/src/resources/carts.json
-proyecto_final/src/resources/products.json
+/src/resources/carts.json
+/src/resources/products.json
 
-proyecto_final/public/documents/**
-proyecto_final/public/products/**
-proyecto_final/public/profiles/**
+public/documents/
+public/products/
+public/profiles/

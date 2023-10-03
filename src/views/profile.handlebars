@@ -34,7 +34,7 @@
         <form
           id="documentsForm"
           onsubmit="uploadDocuments(event, '{{id}}')"
-          class="flex items-center justify-center flex-col"
+          class="flex items-start justify-center flex-col"
         >
           {{#if hasIdentification}}
             <p class="text-white">
@@ -46,7 +46,7 @@
               for="identification"
             >Identification</label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow mb-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="file"
               id="identification"
               name="identification"
@@ -64,7 +64,7 @@
               for="residence"
             >Residence</label>
             <input
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow mb-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="file"
               id="residence"
               name="residence"
@@ -83,7 +83,7 @@
             >Account State</label>
             <input
               type="file"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="shadow mb-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="account_state"
               name="account_state"
               placeholder="Add account state here"
@@ -100,14 +100,15 @@
             >Profile Pic</label>
             <input
               type="file"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              accept=".png,.jpg,.jpeg"
+              class="shadow mb-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="profile"
               name="profile"
               placeholder="Add profile pic here"
             />
           {{/if}}
           <button
-            class="mt-2 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="self-center mt-2 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >Upload documents</button>
         </form>
