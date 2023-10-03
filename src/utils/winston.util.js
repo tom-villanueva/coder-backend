@@ -14,7 +14,7 @@ const levelsOptions = {
     fatal: "red",
     error: "orange",
     warn: "yellow",
-    info: "blue",
+    info: "teal",
     http: "green",
     debug: "white",
   },

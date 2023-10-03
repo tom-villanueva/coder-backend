@@ -1,40 +1,14 @@
-<h1 class="text-bold text-xl text-white ">Users</h1>
+<h1 class="font-bold text-xl text-white mt-4">Products Admin</h1>
 <button
   id="createButton"
-  class="mb-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  class="mb-10 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
   onclick="resetFields()"
 >
   ADD PRODUCT
 </button>
 
-<section class="grid grid-cols-2 gap-2">
-  <ul class="flex flex-col gap-4">
-    {{#each products}}
-      <li class="flex gap-4 text-white">
-        <p class="text-gray-300">{{this.title}}</p>
-        |
-        <p class="text-gray-300">{{this.description}}</p>
-        |
-        <p class="text-gray-300">{{this.owner}}</p>
-        |
-        <button
-          id="editButton"
-          class="rounded bg-blue-500 p-1"
-          onclick="setFormFieldsEdit('{{this.id}}');"
-        >
-          EDIT
-        </button>
-        <button
-          class="rounded bg-gray-500 p-1"
-          onclick="deleteProduct('{{this.id}}')"
-        >DELETE</button>
-      </li>
-    {{else}}
-      <p>No Products</p>
-    {{/each}}
-  </ul>
-
-  <form id="productForm" class="hidden">
+<form id="productForm" class="hidden">
+  <section class="grid grid-cols-2 gap-2">
     <div class="mb-4">
       <label
         class="block text-white text-sm font-bold mb-2"
@@ -150,23 +124,71 @@
       <img
         class="w-32 object-cover rounded"
         id="productImage"
-        src=
+        src=""
         alt="selected product image"
       />
     </section>
     <button
-      class="mb-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      class="mb-10 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       type="submit"
     >
       SAVE
     </button>
     <button
       id="cancelButton"
+      type="button"
       class="mb-10 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
     >
       CANCELAR
     </button>
-  </form>
+  </section>
+</form>
+
+<section class="container mx-auto p-6 font-mono">
+  <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+    <div class="w-full overflow-x-auto">
+      <table
+        class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700"
+      >
+        <tr
+          class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600"
+        >
+          <th><p class="px-4 py-3">Title</p></th>
+          <th><p class="px-4 py-3">Description</p></th>
+          <th><p class="px-4 py-3">Owner</p></th>
+          <th><p class="px-4 py-3">Actions</p></th>
+        </tr>
+        {{#each products}}
+          <tr>
+            <td class="px-4 py-3 border">
+              <p class="text-gray-300">{{this.title}}</p>
+            </td>
+            <td class="px-4 py-3 border">
+              <p class="text-gray-300">{{this.description}}</p>
+            </td>
+            <td class="px-4 py-3 border">
+              <p class="text-gray-300">{{this.owner}}</p>
+            </td>
+            <td class="px-4 py-3 border">
+              <button
+                id="editButton"
+                class="rounded bg-teal-500 p-1 text-white"
+                onclick="setFormFieldsEdit('{{this.id}}');"
+              >
+                EDIT
+              </button>
+              <button
+                class="rounded bg-red-500 p-1 text-white"
+                onclick="deleteProduct('{{this.id}}')"
+              >DELETE</button>
+            </td>
+          </tr>
+        {{else}}
+          <p>No Products</p>
+        {{/each}}
+      </table>
+    </div>
+  </div>
 </section>
 <script src="../../static/config.js"></script>
 <script src="../../static/indexProducts.js"></script>

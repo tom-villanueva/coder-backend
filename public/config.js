@@ -3,11 +3,17 @@ const constants = {
   clientUrl: "http://localhost:8080",
 };
 
-const reloadWindow = () => {
+const reloadWindow = async () => {
+  Swal.fire({
+    title: "Reloading...",
+    allowOutsideClick: false,
+    backdrop: true,
+  });
+  Swal.showLoading();
   location.reload();
 };
 
-const apiCall = async (title, url, method, callbackSuccess) => {
+const apiCall = async (title, url, method, callbackSuccess, formData) => {
   const res = await Swal.fire({
     title: title,
     text: ``,
@@ -18,15 +24,21 @@ const apiCall = async (title, url, method, callbackSuccess) => {
 
   if (res.isConfirmed) {
     try {
-      document.getElementById("spinner")?.classList.remove("hidden");
+      Swal.fire({
+        title: "Please wait",
+        allowOutsideClick: false,
+        backdrop: true,
+      });
+      Swal.showLoading();
 
       const response = await fetch(url, {
         method: method,
+        body: formData,
       });
 
       const jsonRes = await response.json();
 
-      document.getElementById("spinner")?.classList.add("hidden");
+      Swal.close();
 
       if (!response.ok) {
         throw jsonRes;
@@ -40,11 +52,12 @@ const apiCall = async (title, url, method, callbackSuccess) => {
       });
 
       if (res.isConfirmed) {
-        callbackSuccess();
+        callbackSuccess(jsonRes);
       }
 
       return jsonRes.data;
     } catch (error) {
+      console.log(error);
       Swal.fire({
         title: "Error!",
         text: `${error.error ?? error.message}`,

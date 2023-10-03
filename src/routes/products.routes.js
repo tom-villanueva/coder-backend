@@ -23,7 +23,7 @@ productsRouter.post(
 );
 productsRouter.put(
   "/:pid",
-  isAdmin,
+  canDeleteProduct,
   uploader.single("thumbnail"),
   updateProductController
 );

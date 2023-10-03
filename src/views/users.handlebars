@@ -1,31 +1,52 @@
-<h1 class="text-bold text-xl text-white">Users</h1>
+<h1 class="font-bold text-xl text-white mt-4">Users</h1>
 <button
-  class="mb-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+  class="mb-10 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
   onclick="deleteInactiveUsers();"
 >
   DELETE INACTIVE USERS
 </button>
-<ul class="flex flex-col gap-4">
-  {{#each users}}
-    <li class="flex gap-4 text-white">
-      <p class="text-gray-300">{{this.firstName}} {{this.lastName}}</p>
-      |
-      <p class="text-gray-300">{{this.email}}</p>
-      |
-      <p class="text-gray-300">{{this.role}}</p>
-      |
-      <button
-        class="rounded bg-gray-500 p-1"
-        onclick="changeRole('{{this.id}}');"
-      >CHANGE ROLE</button>
-      <button
-        class="rounded bg-gray-500 p-1"
-        onclick="deleteUser('{{this.id}}')"
-      >DELETE</button>
-    </li>
-  {{else}}
-    <p>No users</p>
-  {{/each}}
-</ul>
+<section class="container mx-auto p-6 font-mono">
+  <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+    <div class="w-full overflow-x-auto">
+      <table
+        class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700"
+      >
+        <tr
+          class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600"
+        >
+          <th><p class="px-4 py-3">Full Name</p></th>
+          <th><p class="px-4 py-3">Email</p></th>
+          <th><p class="px-4 py-3">Role</p></th>
+          <th><p class="px-4 py-3">Actions</p></th>
+        </tr>
+        {{#each users}}
+          <tr>
+            <td class="px-4 py-3 border">
+              <p class="text-gray-300">{{this.firstName}} {{this.lastName}}</p>
+            </td>
+            <td class="px-4 py-3 border">
+              <p class="text-gray-300">{{this.email}}</p>
+            </td>
+            <td class="px-4 py-3 border">
+              <p class="text-gray-300">{{this.role}}</p>
+            </td>
+            <td class="px-4 py-3 border">
+              <button
+                class="rounded bg-teal-500 p-1 text-white"
+                onclick="changeRole('{{this.id}}');"
+              >CHANGE ROLE</button>
+              <button
+                class="rounded bg-red-500 p-1 text-white"
+                onclick="deleteUser('{{this.id}}')"
+              >DELETE</button>
+            </td>
+          </tr>
+        {{else}}
+          <p>No users</p>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+</section>
 <script src="../../static/config.js"></script>
 <script src="../../static/indexUsers.js"></script>

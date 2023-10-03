@@ -1,47 +1,81 @@
-<h1 class="text-bold text-xl text-white">Products</h1>
-{{#with user}}
-  <h2 class="text-bold text-md text-white">Welcome!
-    {{firstName}}
-    {{lastName}}</h2>
-  <h3 class="text-bold text-sm text-white">Role: {{role}}</h3>
-  <div class="flex gap-4 mt-4">
-    <a
-      class="text-bold text-sm text-white hover:underline"
-      href="{{clientUrl}}/profile"
-    >PROFILE
-    </a>
-    {{#if (isAdmin role)}}
+<section
+  class="bg-emerald-800 w-full flex justify-between px-12 py-2 items-center mb-4"
+>
+  {{#with user}}
+    <h2 class="font-bold text-md text-white">Welcome!
+      {{firstName}}
+      {{lastName}}</h2>
+    <h3 class="font-bold text-md text-white">Role: {{role}}</h3>
+    <div class="flex gap-4 items-center">
       <a
-        class="text-bold text-sm text-white hover:underline"
-        href="{{clientUrl}}/users"
-      >
-        USERS
+        class="font-semibold text-md text-white hover:underline"
+        href="{{clientUrl}}/profile"
+      >PROFILE
       </a>
-      <a
-        class="text-bold text-sm text-white hover:underline"
-        href="{{clientUrl}}/products/admin"
-      >
-        ADMIN-PRODUCTS
+      {{#if (isAdmin role)}}
+        <a
+          class="font-semibold text-md text-white hover:underline"
+          href="{{clientUrl}}/users"
+        >
+          USERS
+        </a>
+        <a
+          class="font-semibold text-md text-white hover:underline"
+          href="{{clientUrl}}/products/admin"
+        >
+          PRODUCTS ADMIN
+        </a>
+      {{/if}}
+      {{#if (isPremium role)}}
+        <a
+          class="font-semibold text-md text-white hover:underline"
+          href="{{clientUrl}}/products/admin"
+        >
+          ADMIN-PRODUCTS
+        </a>
+      {{/if}}
+      {{!-- <div class="relative">
+        <a
+          class="font-bold text-md text-white hover:underline"
+          href="{{clientUrl}}/carts/{{cart}}"
+        >CART</a>
+        <span
+          class="absolute top-0 right-0 text-red-500 rounded-full border-teal-400 text-teal-400 border-2 px-2"
+        ></span>
+      </div> --}}
+      <a href="{{clientUrl}}/carts/{{cart}}" class="relative flex">
+        <svg
+          class="flex-1 w-8 h-8 fill-current text-white hover:text-teal-400"
+          viewbox="0 0 24 24"
+        >
+          <path
+            d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"
+          />
+        </svg>
+        <span
+          class="absolute right-0 top-0 rounded-full bg-teal-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm leading-tight text-center"
+        >
+          {{productQuantity}}
+        </span>
       </a>
-    {{/if}}
-    {{#if (isPremium role)}}
-      <a
-        class="text-bold text-sm text-white hover:underline"
-        href="{{clientUrl}}/products/admin"
+      <form
+        action="/api/sessions/logout"
+        method="POST"
+        class="flex items-center justify-center m-0"
       >
-        ADMIN-PRODUCTS
-      </a>
-    {{/if}}
-    <a
-      class="text-bold text-sm text-white hover:underline"
-      href="{{clientUrl}}/carts/{{cart}}"
-    >CART</a>
-    <span class="text-red-500">{{productQuantity}}</span>
-  </div>
-{{/with}}
+        <button
+          class="border-2 border-red-500 hover:bg-red-700 text-white font-bold px-2 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+        >Logout</button>
+      </form>
+    </div>
+  {{/with}}
+</section>
+
+<h1 class="font-bold text-xl text-white">Products</h1>
 
 {{! Filters }}
-<section class="border-y-2 border-blue-300 mb-4">
+<section class="my-4">
   <form id="filterForm">
     <div class="flex gap-2 justify-center items-center">
       <div>
@@ -106,12 +140,12 @@
         </select>
       </div>
       <button
-        class="bg-blue-500 mt-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        class="border-2 border-teal-500 mt-6 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="submit"
       >Filter</button>
       <button
         id="clearFiltersButton"
-        class="bg-blue-500 mt-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        class="border-2 border-red-500 mt-6 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         type="button"
       >Clear Filters</button>
     </div>
@@ -130,7 +164,7 @@
       <div class="px-8">
         <h2 class="text-3xl text-center text-white mb-4">{{this.title}}</h2>
         <p class="text-gray-300 mb-4 truncate">{{this.description}}</p>
-        <p class="text-blue-300 mb-4">Category: {{this.category}}</p>
+        <p class="text-teal-300 mb-4">Category: {{this.category}}</p>
         {{#if this.status}}
           <span
             class="uppercase text-xs bg-green-50 p-0.5 border-green-500 border rounded text-green-700 font-medium select-none"
@@ -140,13 +174,13 @@
           <div class="mt-2 flex justify-center">
             <a href="{{clientUrl}}/products/{{this.id}}">
               <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4"
+                class="border-2 border-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4"
                 type="button"
               >See More</button>
             </a>
             <button
               onclick="addProductToCart('{{this.id}}');"
-              class="flex bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="flex bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="button"
             ><svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -176,10 +210,9 @@
     <p>No products</p>
   {{/each}}
 </ul>
-<p class="mt-4 text-md text-white">Total Pages: {{totalPages}}</p>
 
 {{! Pagination }}
-<ul class="inline-flex -space-x-px mb-4">
+<ul class="inline-flex -space-x-px mt-4">
   {{#if hasPrevPage}}
     <a
       class="cursor-pointer px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700"
@@ -198,20 +231,7 @@
     >Next</a>
   {{/if}}
 </ul>
+<p class="text-md text-white mb-4">Total Pages: {{totalPages}}</p>
+
 <script src="../../static/config.js"></script>
 <script src="../../static/index.js"></script>
-{{!-- prettier-ignore --}}
-<script>
-  function onFilterFormSubmit(e) {
-    e.preventDefault(); 
-    const data = Object.fromEntries(new FormData(e.target)); 
-    location.href = 
-      `${constants.clientUrl}/products/?page=1&limit=${data.limit}&category=${data.category}&status=${data.status}&sort=${data.sort}`
-  }
-
-  function clearFilters() {
-    location.href = `${constants.clientUrl}/products/?page=1&limit=10&category=&status=true&sort=`
-  } 
-  document.getElementById("filterForm").addEventListener("submit", onFilterFormSubmit);
-  document.getElementById("clearFiltersButton").addEventListener("click", clearFilters);
-</script>

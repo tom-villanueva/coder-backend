@@ -3,7 +3,9 @@ const buyCart = async (id) => {
     "Buy?",
     `${constants.clientUrl}/api/carts/${id}/purchase`,
     "POST",
-    reloadWindow
+    (response) => {
+      location.href = `/carts/purchase-success?ticket=${response.data.ticket.code}`;
+    }
   );
 };
 

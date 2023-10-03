@@ -76,11 +76,13 @@ class ProductService {
         productToAdd = {
           ...product,
           owner: user.email,
-          thumbnail: thumbnail.path,
+          thumbnail: thumbnail?.path,
         };
       }
+      if (thumbnail) {
+        await UserService.uploadDocument(user._id, thumbnail);
+      }
 
-      await UserService.uploadDocument(user.id, thumbnail);
       const newProduct = await this.dao.create(productToAdd);
 
       return newProduct;
@@ -97,10 +99,13 @@ class ProductService {
     try {
       this.checkId(id);
 
-      await UserService.uploadDocument(user._id, thumbnail);
+      if (thumbnail) {
+        await UserService.uploadDocument(user._id, thumbnail);
+      }
+
       const updatedProduct = await this.dao.updateProduct(id, {
         ...product,
-        thumbnail: thumbnail.path,
+        thumbnail: thumbnail?.path,
       });
 
       if (updatedProduct.modifiedCount === 0) {

@@ -1,120 +1,128 @@
-<div class="bg-gray-800 shadow-lg rounded-lg p-8 max-w-sm w-full">
+<div class="bg-gray-800 shadow-lg rounded-lg p-8 max-w-3xl w-full mt-4">
   {{#with user}}
-    <h2 class="text-3xl text-center text-white mb-8">Profile</h2>
-    <div class="mb-4">
-      <h3 class="text-white text-sm font-bold mb-2">Profile Pic</h3>
-      <img
-        class="h-24 w-24 rounded"
-        src="../../static/profiles/{{id}}/{{profile_pic}}"
-        alt="user profile pic"
-      />
-    </div>
-    <div class="mb-4">
-      <h3 class="text-white text-sm font-bold mb-2">Email</h3>
-      <p class="bg-gray-700 rounded p-2 text-gray-300">{{email}}</p>
-    </div>
-    <div class="mb-4">
-      <h3 class="text-white text-sm font-bold mb-2">First Name</h3>
-      <p class="bg-gray-700 rounded p-2 text-gray-300">{{firstName}}</p>
-    </div>
-    <div class="mb-4">
-      <h3 class="text-white text-sm font-bold mb-2">Last Name</h3>
-      <p class="bg-gray-700 rounded p-2 text-gray-300">{{lastName}}</p>
-    </div>
-    <div class="mb-6">
-      <h3 class="text-white text-sm font-bold mb-2">Age</h3>
-      <p class="bg-gray-700 rounded p-2 text-gray-300">{{age}}</p>
-    </div>
-    <form
-      action="/api/users/{{id}}/documents"
-      method="POST"
-      enctype="multipart/form-data"
-      class="flex items-center justify-center flex-col"
-    >
-      {{#if hasIdentification}}
-        <p class="text-white">
-          Already uploaded Identification
-        </p>
-      {{else}}
-        <label
-          class="block text-white text-sm font-bold mb-2"
-          for="identification"
-        >Identification</label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          type="file"
-          id="identification"
-          name="identification"
-          placeholder="Add identification here"
-        />
-      {{/if}}
+    <section class="grid grid-cols-2 gap-4">
+      <div>
+        <h2 class="text-3xl text-center text-white mb-8">Profile</h2>
+        <div class="mb-4">
+          <h3 class="text-white text-sm font-bold mb-2">Profile Pic</h3>
+          <img
+            class="h-24 w-24 rounded"
+            src="../../static/profiles/{{id}}/{{profile_pic}}"
+            alt="user profile pic"
+          />
+        </div>
+        <div class="mb-4">
+          <h3 class="text-white text-sm font-bold mb-2">Email</h3>
+          <p class="bg-gray-700 rounded p-2 text-gray-300">{{email}}</p>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-white text-sm font-bold mb-2">First Name</h3>
+          <p class="bg-gray-700 rounded p-2 text-gray-300">{{firstName}}</p>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-white text-sm font-bold mb-2">Last Name</h3>
+          <p class="bg-gray-700 rounded p-2 text-gray-300">{{lastName}}</p>
+        </div>
+        <div class="mb-6">
+          <h3 class="text-white text-sm font-bold mb-2">Age</h3>
+          <p class="bg-gray-700 rounded p-2 text-gray-300">{{age}}</p>
+        </div>
+      </div>
 
-      {{#if hasResidence}}
-        <p class="text-white">
-          Already uploaded Residence
-        </p>
-      {{else}}
-        <label
-          class="block text-white text-sm font-bold mb-2"
-          for="residence"
-        >Residence</label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          type="file"
-          id="residence"
-          name="residence"
-          placeholder="Add residence here"
-        />
-      {{/if}}
+      <div>
+        <h2 class="text-3xl text-center text-white mb-8">Documents</h2>
+        <form
+          action="/api/users/{{id}}/documents"
+          method="POST"
+          enctype="multipart/form-data"
+          class="flex items-center justify-center flex-col"
+        >
+          {{#if hasIdentification}}
+            <p class="text-white">
+              Already uploaded Identification
+            </p>
+          {{else}}
+            <label
+              class="block text-white text-sm font-bold mb-2"
+              for="identification"
+            >Identification</label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="file"
+              id="identification"
+              name="identification"
+              placeholder="Add identification here"
+            />
+          {{/if}}
 
-      {{#if hasAccountState}}
-        <p class="text-white">
-          Already uploaded Account State
-        </p>
-      {{else}}
-        <label
-          class="block text-white text-sm font-bold mb-2"
-          for="account_state"
-        >Account State</label>
-        <input
-          type="file"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="account_state"
-          name="account_state"
-          placeholder="Add account state here"
-        />
-      {{/if}}
-      {{#if hasProfilePic}}
-        <p class="text-white">
-          Already uploaded profile pic
-        </p>
-      {{else}}
-        <label
-          class="block text-white text-sm font-bold mb-2"
-          for="profile"
-        >Profile Pic</label>
-        <input
-          type="file"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="profile"
-          name="profile"
-          placeholder="Add profile pic here"
-        />
-      {{/if}}
-      <button
-        class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="submit"
-      >Upload documents</button>
-    </form>
-    <form
-      action="/api/sessions/logout"
-      method="POST"
-      class="flex items-center justify-center"
-    >
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="submit"
-      >Logout</button>
-    </form>
+          {{#if hasResidence}}
+            <p class="text-white">
+              Already uploaded Residence
+            </p>
+          {{else}}
+            <label
+              class="block text-white text-sm font-bold mb-2"
+              for="residence"
+            >Residence</label>
+            <input
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="file"
+              id="residence"
+              name="residence"
+              placeholder="Add residence here"
+            />
+          {{/if}}
+
+          {{#if hasAccountState}}
+            <p class="text-white">
+              Already uploaded Account State
+            </p>
+          {{else}}
+            <label
+              class="block text-white text-sm font-bold mb-2"
+              for="account_state"
+            >Account State</label>
+            <input
+              type="file"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="account_state"
+              name="account_state"
+              placeholder="Add account state here"
+            />
+          {{/if}}
+          {{#if hasProfilePic}}
+            <p class="text-white">
+              Already uploaded profile pic
+            </p>
+          {{else}}
+            <label
+              class="block text-white text-sm font-bold mb-2"
+              for="profile"
+            >Profile Pic</label>
+            <input
+              type="file"
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="profile"
+              name="profile"
+              placeholder="Add profile pic here"
+            />
+          {{/if}}
+          <button
+            class="mt-2 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >Upload documents</button>
+        </form>
+        <form
+          action="/api/sessions/logout"
+          method="POST"
+          class="flex items-center justify-center"
+        >
+          <button
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >Logout</button>
+        </form>
+      </div>
+    </section>
   {{/with}}
 </div>

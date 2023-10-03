@@ -1,26 +1,8 @@
-let productId;
-
-const updateProduct = async (id) => {
-  apiCall(
-    "Update product?",
-    `${constants.clientUrl}/api/products/${id}`,
-    "PUT",
-    reloadWindow
-  );
-};
-
-const createProduct = async (id) => {
-  apiCall(
-    "Create product?",
-    `${constants.clientUrl}/api/products`,
-    "POST",
-    reloadWindow
-  );
-};
+let productId = null;
 
 const deleteProduct = async (id) => {
   apiCall(
-    "Create product?",
+    "Delete product?",
     `${constants.clientUrl}/api/products/${id}`,
     "DELETE",
     reloadWindow
@@ -32,6 +14,14 @@ const showForm = () => {
 
   if (form.classList.contains("hidden")) {
     form.classList.remove("hidden");
+  }
+};
+
+const closeForm = () => {
+  const form = document.getElementById("productForm");
+
+  if (!form.classList.contains("hidden")) {
+    form.classList.add("hidden");
   }
 };
 
@@ -55,6 +45,7 @@ const resetFields = () => {
   code.value = "";
   image.src = "";
   showForm();
+  title.focus();
 };
 
 const setFormFieldsEdit = async (id) => {
@@ -95,6 +86,7 @@ const setFormFieldsEdit = async (id) => {
 
     productId = product._id;
     showForm();
+    title.focus();
   } catch (error) {
     Swal.fire({
       title: "Error!",
@@ -105,27 +97,35 @@ const setFormFieldsEdit = async (id) => {
   }
 };
 
+const getFormData = () => {};
+
 const save = (e) => {
   e.preventDefault();
+
+  const formData = new FormData(e.target);
+
   if (productId) {
     apiCall(
       "Edit product?",
       `${constants.clientUrl}/api/products/${productId}`,
       "PUT",
-      reloadWindow
+      reloadWindow,
+      formData
     );
   } else {
     apiCall(
-      "Add to cart?",
+      "Create product?",
       `${constants.clientUrl}/api/products`,
       "POST",
-      reloadWindow
+      reloadWindow,
+      formData
     );
   }
 };
 
 const setForm = () => {
   document.getElementById("productForm").addEventListener("submit", save);
+  document.getElementById("cancelButton").addEventListener("click", closeForm);
 };
 
 setForm();

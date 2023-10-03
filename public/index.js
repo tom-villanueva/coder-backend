@@ -1,5 +1,8 @@
 const getCart = async () => {
   try {
+    Swal.fire({ title: "Please wait", allowOutsideClick: false });
+    Swal.showLoading();
+
     const response = await fetch(
       `${constants.clientUrl}/api/sessions/current`,
       {
@@ -7,6 +10,8 @@ const getCart = async () => {
       }
     );
     const user = await response.json();
+
+    Swal.close();
 
     if (!response.ok) {
       throw user;
@@ -43,3 +48,20 @@ const addProductToCart = async (productId) => {
     });
   }
 };
+
+function onFilterFormSubmit(e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target));
+  location.href = `${constants.clientUrl}/products/?page=1&limit=${data.limit}&category=${data.category}&status=${data.status}&sort=${data.sort}`;
+}
+
+function clearFilters() {
+  location.href = `${constants.clientUrl}/products/?page=1&limit=10&category=&status=true&sort=`;
+}
+
+document
+  .getElementById("filterForm")
+  ?.addEventListener("submit", onFilterFormSubmit);
+document
+  .getElementById("clearFiltersButton")
+  ?.addEventListener("click", clearFilters);
