@@ -4,9 +4,10 @@ const githubCallbackController = (req, res, next) => {
     email: req.user.email,
     firstName: req.user.firstName,
     lastName: req.user.lastName,
+    cart: req.user.cart,
     role: req.user.role,
   };
-  // Successful authentication, redirect home.
+
   res.redirect("/products");
 };
 
