@@ -70,7 +70,10 @@ class ProductService {
 
   async createProduct(product, user, thumbnail) {
     try {
-      let productToAdd = product;
+      let productToAdd = {
+        ...product,
+        thumbnail: thumbnail?.path,
+      };
 
       if (user.role === "premium") {
         productToAdd = {
@@ -79,6 +82,7 @@ class ProductService {
           thumbnail: thumbnail?.path,
         };
       }
+
       if (thumbnail) {
         await UserService.uploadDocument(user._id, thumbnail);
       }
