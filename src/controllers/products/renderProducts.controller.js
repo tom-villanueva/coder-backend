@@ -7,8 +7,6 @@ const renderProductsController = async (req, res, next) => {
   try {
     const products = await ProductService.getAllProducts(req.query);
 
-    console.log(req.session.user);
-
     const cartProducts = await CartService.getCartProducts(
       req.session.user.cart
     );
